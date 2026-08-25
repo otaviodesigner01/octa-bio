@@ -4,188 +4,237 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Otávio Designer — Links</title>
-<meta name="description" content="Links do Otávio Designer (OCTA) — agência 360, orçamento e portfólio." />
-<meta name="theme-color" content="#0a0a0b" />
+<meta name="description" content="Otávio Designer — HUD de serviços, agência Astrus e portfólio." />
+<meta name="theme-color" content="#07070b" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Otávio Designer — OCTA" />
-<meta property="og:description" content="Agência 360: soluções de marketing pro seu negócio." />
+<meta property="og:title" content="Otávio Designer" />
+<meta property="og:description" content="Design & tecnologia. Serviços, agência Astrus e portfólio." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    --bg:#0a0a0b;
-    --white:#f6f6f4;
-    --muted:#9a9a95;
-    --muted-2:#6d6d68;
+    --bg:#07070b;
+    --white:#f3f4f7;
+    --muted:#8a8c96;
+    --muted-2:#5c5e68;
     --red:#e52421;
     --red-2:#ff3b34;
-    --red-3:#ff7a3d;
+    --red-3:#ff7a52;
     --red-deep:#a00000;
+    --hud:rgba(255,70,58,.5);
+    --hud-soft:rgba(255,70,58,.14);
     --line:rgba(255,255,255,.10);
-    --line-2:rgba(255,255,255,.16);
+    --line-2:rgba(255,255,255,.18);
     --ease:cubic-bezier(.16,1,.3,1);
-    --font-display:"Sora","DM Sans",system-ui,sans-serif;
-    --font-body:"DM Sans",system-ui,sans-serif;
-    --font-mono:"JetBrains Mono",ui-monospace,monospace;
+    --fd:"Sora",system-ui,sans-serif;
+    --fb:"DM Sans",system-ui,sans-serif;
+    --fm:"JetBrains Mono",ui-monospace,monospace;
   }
   *{box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
-  body{
-    margin:0;min-height:100svh;background:var(--bg);color:var(--white);
-    font-family:var(--font-body);line-height:1.5;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
-  }
+  body{margin:0;min-height:100svh;background:var(--bg);color:var(--white);font-family:var(--fb);line-height:1.5;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
 
-  /* ============ FUNDO EM CÓDIGO (espectro + degradê, leve) ============ */
-  /* fundo: embed UnicornStudio + tint vermelho */
-  .bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;isolation:isolate;background:#0a0a0b;}
-  .us-embed{position:absolute;inset:0;width:100%;height:100%;}
-  .us-embed canvas{display:block;width:100%;height:100%;}
-  .us-tint{position:absolute;inset:0;background:rgba(255,0,0,.5);mix-blend-mode:color;pointer-events:none;}
-  .bg-veil{position:fixed;inset:0;z-index:2;pointer-events:none;
-    background:
-      radial-gradient(62% 40% at 50% 34%, rgba(8,7,8,.6) 0%, rgba(8,7,8,.26) 52%, transparent 80%),
-      linear-gradient(180deg, rgba(10,10,11,.4) 0%, transparent 24%, transparent 56%, rgba(10,10,11,.72) 100%);}
-  .grain{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  /* ---------- fundo: grid HUD + canvas de partículas reativo ---------- */
+  .grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,70,58,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,70,58,.045) 1px,transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask:radial-gradient(120% 90% at 50% 40%,#000 55%,transparent 100%);
+    mask:radial-gradient(120% 90% at 50% 40%,#000 55%,transparent 100%);}
+  #net{position:fixed;inset:0;z-index:1;display:block;}
+  .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(60% 45% at 50% 34%,rgba(7,7,11,.5) 0%,transparent 70%),
+    radial-gradient(140% 120% at 50% 0%,transparent 55%,rgba(7,7,11,.7) 100%),
+    linear-gradient(180deg,rgba(7,7,11,.4) 0%,transparent 22%,transparent 60%,rgba(7,7,11,.8) 100%);}
 
-  /* ============ COLUNA ============ */
-  .wrap{position:relative;z-index:4;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(36px,8vw,64px) 18px;}
-  .col{width:100%;max-width:540px;display:flex;flex-direction:column;align-items:center;}
+  /* ---------- layout ---------- */
+  .wrap{position:relative;z-index:3;min-height:100svh;display:flex;flex-direction:column;align-items:center;
+    padding:clamp(20px,5vw,40px) 18px clamp(40px,8vw,64px);}
+  .col{width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;}
 
-  /* avatar + anel rotativo */
-  .avatar-wrap{position:relative;width:230px;height:230px;display:grid;place-items:center;}
-  .ring-text{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
-    animation:ringspin 26s linear infinite, ringfade 7s ease-in-out infinite;will-change:transform,opacity;}
-  .ring-text text{font-family:var(--font-mono);font-size:8.7px;letter-spacing:2.3px;fill:#ecd9d9;text-transform:uppercase;}
-  @keyframes ringspin{to{transform:rotate(360deg);}}
-  @keyframes ringfade{0%,100%{opacity:.1}50%{opacity:1}}
-  .avatar{position:relative;width:140px;height:140px;border-radius:50%;padding:3px;
-    background:conic-gradient(from 210deg,var(--red-2),var(--red),var(--red-deep),var(--red));
-    box-shadow:0 0 0 1px rgba(255,255,255,.06),0 12px 40px rgba(229,36,33,.42);}
-  .avatar::after{content:"";position:absolute;inset:-14px;border-radius:50%;z-index:-1;background:radial-gradient(closest-side,rgba(229,36,33,.35),transparent 70%);filter:blur(6px);}
-  .avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 16%;background:#111;}
+  /* barra HUD topo */
+  .topbar{width:100%;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:clamp(12px,3vw,22px);}
+  .topbar .brand{display:flex;align-items:center;gap:8px;color:var(--muted);}
+  .topbar .brand svg{width:15px;height:15px;}
+  .topbar .status{display:inline-flex;align-items:center;gap:7px;color:var(--red-2);}
+  .topbar .status .dot{width:6px;height:6px;border-radius:50%;background:var(--red-2);box-shadow:0 0 8px var(--red-2);animation:pulse 2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,52,.5)}70%{box-shadow:0 0 0 6px rgba(255,59,52,0)}100%{box-shadow:0 0 0 0 rgba(255,59,52,0)}}
 
-  /* nome */
-  .name{margin-top:14px;font-family:var(--font-display);font-weight:800;font-size:clamp(25px,7.1vw,40px);letter-spacing:-.03em;line-height:1.04;text-align:center;white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.6);}
+  /* ---------- ORGCHART: foto no centro + nós de serviços ---------- */
+  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(4px,2vw,10px);}
+  .org__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;}
+  .org__svg line{stroke:rgba(255,70,58,.35);stroke-width:.5;}
+  .org__svg .flow{stroke:var(--red-2);stroke-width:.8;stroke-dasharray:2 7;filter:drop-shadow(0 0 2px var(--red-2));animation:flow 1.4s linear infinite;}
+  @keyframes flow{to{stroke-dashoffset:-18;}}
 
-  /* ============ SERVIÇOS: foco sequencial (wipe esquerda→direita) ============ */
-  .svc{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:9px;}
-  .svc__lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);}
-  .svc__word{font-family:var(--font-display);font-weight:800;font-size:clamp(24px,6.4vw,36px);letter-spacing:-.02em;line-height:1.08;min-height:1.15em;white-space:nowrap;
-    background:linear-gradient(90deg,#fff,#ffb9a0);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:opacity;}
-  .svc__word.in{
-    -webkit-mask:linear-gradient(90deg,#000 0 40%,transparent 62%) no-repeat;mask:linear-gradient(90deg,#000 0 40%,transparent 62%) no-repeat;
-    -webkit-mask-size:260% 100%;mask-size:260% 100%;
-    animation:wipeIn .66s var(--ease) forwards;}
-  .svc__word.out{
-    -webkit-mask:linear-gradient(90deg,transparent 0 40%,#000 62%) no-repeat;mask:linear-gradient(90deg,transparent 0 40%,#000 62%) no-repeat;
-    -webkit-mask-size:260% 100%;mask-size:260% 100%;
-    animation:wipeOut .58s var(--ease) forwards;}
-  @keyframes wipeIn{from{-webkit-mask-position:100% 0;mask-position:100% 0;opacity:.25}to{-webkit-mask-position:0% 0;mask-position:0% 0;opacity:1}}
-  @keyframes wipeOut{from{-webkit-mask-position:100% 0;mask-position:100% 0;opacity:1}to{-webkit-mask-position:0% 0;mask-position:0% 0;opacity:0}}
-  .svc__bar{height:3px;width:118px;border-radius:2px;background:linear-gradient(90deg,var(--red-deep),var(--red),var(--red-3),var(--red-2));background-size:200% 100%;animation:barslide 3s linear infinite;}
-  @keyframes barslide{to{background-position:200% 0;}}
+  /* foto central — moldura HUD retangular */
+  .core{position:absolute;top:50%;left:50%;width:34%;aspect-ratio:1/1;transform:translate(-50%,-50%);}
+  .core__frame{position:relative;width:100%;height:100%;border-radius:16px;overflow:hidden;
+    border:1px solid rgba(255,90,74,.45);
+    box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 34px rgba(229,36,33,.4),inset 0 0 22px rgba(0,0,0,.5);}
+  .core__frame img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;}
+  .core__frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(229,36,33,.12),transparent 40%,rgba(7,7,11,.35));mix-blend-mode:overlay;}
+  .core__scan{position:absolute;left:0;right:0;height:26%;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(255,90,74,.22),transparent);animation:scan 3.4s var(--ease) infinite;}
+  @keyframes scan{0%{top:-26%}100%{top:100%}}
+  /* cantos HUD */
+  .core b{position:absolute;width:14px;height:14px;border:2px solid var(--red-2);filter:drop-shadow(0 0 4px rgba(255,59,52,.7));}
+  .core b.tl{top:-6px;left:-6px;border-right:0;border-bottom:0;}
+  .core b.tr{top:-6px;right:-6px;border-left:0;border-bottom:0;}
+  .core b.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;}
+  .core b.br{bottom:-6px;right:-6px;border-left:0;border-top:0;}
+  .core__glow{position:absolute;inset:-30% -30%;z-index:-1;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(229,36,33,.4),transparent 70%);filter:blur(6px);animation:breathe 5s var(--ease) infinite;}
+  @keyframes breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 
-  /* socials */
+  /* nós de serviço */
+  .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;
+    width:66px;will-change:transform;}
+  .node__chip{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;color:#ffd9d1;
+    background:linear-gradient(140deg,rgba(255,255,255,.08),rgba(255,255,255,.015)),rgba(24,14,15,.72);
+    border:1px solid rgba(255,90,74,.32);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 22px rgba(0,0,0,.5),0 0 16px rgba(229,36,33,.14);
+    animation:float 6s var(--ease) infinite;}
+  .node__chip svg{width:22px;height:22px;}
+  .node__lbl{font-family:var(--fm);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-shadow:0 1px 6px #000;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .n1{top:6%;left:50%}.n2{top:19%;left:82%}.n3{top:50%;left:91%}.n4{top:81%;left:82%}
+  .n5{top:96%;left:50%}.n6{top:81%;left:18%}.n7{top:50%;left:9%}.n8{top:19%;left:18%}
+  .node:nth-child(2n) .node__chip{animation-duration:7.2s;animation-delay:-1.5s;}
+  .node:nth-child(3n) .node__chip{animation-duration:8s;animation-delay:-3s;}
+
+  /* ---------- nome + serviços (mono) ---------- */
+  .name{margin-top:clamp(16px,3.4vw,26px);font-family:var(--fd);font-weight:800;font-size:clamp(27px,7.4vw,42px);letter-spacing:-.03em;line-height:1.02;text-align:center;white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.6);}
+  .svc{margin-top:10px;font-family:var(--fm);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:9px;}
+  .svc .tag{color:var(--red-2);}
+  .svc .w{color:var(--white);min-width:150px;text-align:left;transition:opacity .35s,transform .35s;}
+  .svc .cur{color:var(--red-2);animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ---------- ícones sociais ---------- */
   .socials{margin-top:22px;display:flex;gap:12px;}
-  .social{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:var(--white);
-    background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),rgba(16,14,15,.74);
-    border:1px solid var(--line-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 26px rgba(0,0,0,.4);
-    transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);}
-  .social:hover{transform:translateY(-3px);border-color:rgba(229,36,33,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 14px 34px rgba(229,36,33,.28);}
+  .social{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--white);
+    background:linear-gradient(140deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),rgba(18,14,15,.7);
+    border:1px solid var(--line-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 22px rgba(0,0,0,.4);
+    transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,color .3s;}
+  .social:hover{transform:translateY(-3px);color:#fff;border-color:var(--red-2);box-shadow:0 0 6px rgba(255,59,52,.5),0 0 20px rgba(229,36,33,.35);}
   .social svg{width:20px;height:20px;}
 
-  /* ============ BOTÕES GRANDES ============ */
-  .links{margin-top:28px;width:100%;display:flex;flex-direction:column;gap:16px;}
-  .lk{position:relative;display:flex;align-items:stretch;min-height:150px;border-radius:24px;overflow:hidden;isolation:isolate;
-    border:1px solid var(--line-2);box-shadow:0 22px 54px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.1);
-    transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease);will-change:transform;}
-  .lk:hover,.lk:focus-visible{transform:translateY(-3px);border-color:var(--red-2);
-    box-shadow:0 0 6px rgba(255,59,52,.6),0 0 22px rgba(255,59,52,.5),0 0 58px rgba(229,36,33,.42),0 26px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.18);}
-  .lk:hover .lk__title,.lk:focus-visible .lk__title{text-shadow:0 0 6px rgba(255,255,255,.7),0 0 16px rgba(255,90,80,.6),0 0 30px rgba(229,36,33,.5);}
-  .lk:active{transform:translateY(-1px) scale(.995);}
-
-  /* efeito breezy-zebra (paleta OCTA) */
-  .lk__fx{position:absolute;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(118deg,#7a0f0d 0%,#e52421 46%,#ff7a3d 78%,#a00000 100%);}
-  .gradient-layer{display:none;}
-  .lk__light{position:absolute;inset:0;background:radial-gradient(70% 120% at 18% -20%,rgba(255,255,255,.15),transparent 55%);}
-
-  .lk__art{position:relative;flex:none;width:46%;max-width:230px;overflow:hidden;
-    background:linear-gradient(135deg,rgba(229,36,33,.5),rgba(160,0,0,.25) 55%,rgba(0,0,0,.35));
-    border-right:1px solid rgba(255,255,255,.08);display:grid;place-items:center;}
-  .lk__art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-  .lk__art .wm{width:44%;max-width:78px;opacity:.5;}
-  .lk__art .wm svg{width:100%;height:auto;}
-  .lk__art .hint{position:absolute;bottom:9px;left:0;right:0;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);}
-
-  .lk__body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:20px 22px;
-    background:linear-gradient(90deg,rgba(10,7,8,.1),rgba(10,7,8,.5));}
-  .lk__title{font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:-.015em;line-height:1.15;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.5);}
-  .lk__desc{font-size:13.5px;line-height:1.44;color:rgba(255,255,255,.84);text-shadow:0 1px 10px rgba(0,0,0,.5);}
-  .lk__chevron{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.55);transition:transform .35s var(--ease),color .35s var(--ease);}
-  .lk:hover .lk__chevron{color:#fff;transform:translateY(-50%) translateX(3px);}
-  .lk__chevron svg{width:20px;height:20px;}
+  /* ---------- botões: chrome translúcido holográfico + glitch ---------- */
+  .links{margin-top:26px;width:100%;display:flex;flex-direction:column;gap:14px;}
+  .lk{position:relative;display:flex;align-items:center;gap:15px;padding:17px 18px;border-radius:14px;overflow:hidden;isolation:isolate;
+    background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),rgba(20,16,18,.44);
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.05),0 12px 34px rgba(0,0,0,.5);
+    transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);will-change:transform;}
+  .lk:hover{transform:translateY(-2px);border-color:rgba(255,120,90,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 0 30px rgba(229,36,33,.25),0 16px 40px rgba(0,0,0,.55);}
+  .lk:active{transform:translateY(0) scale(.995);}
+  /* reflexo holográfico */
+  .lk__holo{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.9;
+    background:linear-gradient(115deg,transparent 28%,rgba(255,90,70,.22) 43%,rgba(255,255,255,.34) 50%,rgba(120,170,255,.2) 57%,transparent 72%);
+    background-size:250% 100%;animation:holo 6.5s linear infinite;}
+  @keyframes holo{0%{background-position:150% 0}100%{background-position:-150% 0}}
+  /* camada de glitch/inversão que segue o cursor */
+  .lk__glitch{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .1s;
+    -webkit-backdrop-filter:invert(1) contrast(1.5) hue-rotate(-12deg);backdrop-filter:invert(1) contrast(1.5) hue-rotate(-12deg);
+    -webkit-mask:radial-gradient(70px 70px at var(--mx,50%) var(--my,50%),#000 34%,rgba(0,0,0,.55) 58%,transparent 76%);
+    mask:radial-gradient(70px 70px at var(--mx,50%) var(--my,50%),#000 34%,rgba(0,0,0,.55) 58%,transparent 76%);}
+  .lk:hover .lk__glitch{opacity:1;animation:glitch .16s steps(2,end) infinite;}
+  @keyframes glitch{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,-2px)}80%{transform:translate(2px,1px)}100%{transform:translate(-1px,1px)}}
+  .lk > *{position:relative;z-index:0;}
+  .lk__ic{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:#fff;
+    background:radial-gradient(120% 120% at 30% 15%,rgba(255,90,70,.3),rgba(0,0,0,.35));border:1px solid rgba(255,255,255,.16);}
+  .lk__ic svg{width:23px;height:23px;}
+  .lk__tx{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .lk__t{display:block;font-family:var(--fd);font-weight:700;font-size:16.5px;letter-spacing:-.01em;line-height:1.18;color:#fff;}
+  .lk__s{display:block;margin-top:3px;font-size:12.5px;line-height:1.36;color:var(--muted);}
+  .lk__go{flex:none;color:var(--muted);transition:transform .3s var(--ease),color .3s;}
+  .lk:hover .lk__go{color:var(--red-2);transform:translateX(3px);}
+  .lk__go svg{width:19px;height:19px;}
 
   /* rodapé */
-  .foot{margin-top:36px;display:flex;align-items:center;gap:11px;opacity:.92;}
-  .foot__by{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);}
-  .foot__logo{display:flex;transition:opacity .3s var(--ease);}
-  .foot__logo:hover{opacity:.8;}
-  .foot__logo svg{height:20px;width:auto;}
+  .foot{margin-top:32px;display:flex;align-items:center;gap:9px;font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);}
+  .foot svg{width:17px;height:17px;opacity:.9;}
+  .foot a{display:inline-flex;align-items:center;gap:8px;transition:color .3s;}
+  .foot a:hover{color:var(--muted);}
 
-  @media (max-width:420px){
-    .avatar-wrap{width:212px;height:212px;}
-    .avatar{width:130px;height:130px;}
-    .lk{min-height:132px;}
-    .lk__body{padding:15px 30px 15px 16px;}
-    .lk__title{font-size:18px;}
-    .lk__desc{font-size:12.8px;}
+  @media (max-width:400px){
+    .node{width:56px;}
+    .node__chip{width:42px;height:42px;}
+    .node__chip svg{width:19px;height:19px;}
+    .node__lbl{font-size:7.6px;}
+    .lk__t{font-size:15.5px;}
   }
   @media (prefers-reduced-motion:reduce){
-    .ring-text,.svc__bar{animation:none;}
-    .ring-text{opacity:.75;}
-    .svc__word.in,.svc__word.out{animation:none;-webkit-mask:none;mask:none;opacity:1;}
+    .org__svg .flow,.core__scan,.core__glow,.node__chip,.topbar .status .dot,.lk__holo,.svc .cur{animation:none;}
   }
 </style>
 </head>
 <body>
 
-<div class="bgfx" aria-hidden="true">
-  <div data-us-project="tPmIIl0vKqHO9yqmtge2" data-us-fps="30" class="us-embed"></div>
-  <div class="us-tint"></div>
-</div>
-<div class="bg-veil" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
 
 <main class="wrap">
   <div class="col">
 
-    <!-- FOTO + ANEL ROTATIVO -->
-    <div class="avatar-wrap">
-      <svg class="ring-text" viewBox="0 0 240 240" aria-hidden="true">
-        <defs><path id="ringpath" d="M120,120 m-100,0 a100,100 0 1,1 200,0 a100,100 0 1,1 -200,0"/></defs>
-        <text><textPath href="#ringpath" startOffset="0">DISPONÍVEL PARA PROJETOS&#160;·&#160;DISPONÍVEL PARA PROJETOS&#160;·&#160;DISPONÍVEL PARA PROJETOS&#160;·&#160;</textPath></text>
+    <!-- TOPBAR HUD -->
+    <div class="topbar">
+      <span class="brand">
+        <svg viewBox="0 0 290.93 304.8" xmlns="http://www.w3.org/2000/svg"><path fill="#e52421" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/><path fill="#e52421" d="M0,233.1L.13,101.12c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.08.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/></svg>
+        OTÁVIO·SYS
+      </span>
+      <span class="status"><span class="dot"></span>Disponível p/ projetos</span>
+    </div>
+
+    <!-- ORGCHART -->
+    <div class="org">
+      <svg class="org__svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <g>
+          <line x1="50" y1="50" x2="50" y2="6"/><line x1="50" y1="50" x2="82" y2="19"/>
+          <line x1="50" y1="50" x2="91" y2="50"/><line x1="50" y1="50" x2="82" y2="81"/>
+          <line x1="50" y1="50" x2="50" y2="96"/><line x1="50" y1="50" x2="18" y2="81"/>
+          <line x1="50" y1="50" x2="9" y2="50"/><line x1="50" y1="50" x2="18" y2="19"/>
+        </g>
+        <g>
+          <line class="flow" x1="50" y1="50" x2="50" y2="6"/><line class="flow" x1="50" y1="50" x2="82" y2="19" style="animation-delay:-.2s"/>
+          <line class="flow" x1="50" y1="50" x2="91" y2="50" style="animation-delay:-.4s"/><line class="flow" x1="50" y1="50" x2="82" y2="81" style="animation-delay:-.6s"/>
+          <line class="flow" x1="50" y1="50" x2="50" y2="96" style="animation-delay:-.8s"/><line class="flow" x1="50" y1="50" x2="18" y2="81" style="animation-delay:-1s"/>
+          <line class="flow" x1="50" y1="50" x2="9" y2="50" style="animation-delay:-1.2s"/><line class="flow" x1="50" y1="50" x2="18" y2="19" style="animation-delay:-1.4s"/>
+        </g>
       </svg>
-      <div class="avatar"><img src="assets/otavio.jpg" alt="Otávio Designer" /></div>
+
+      <!-- núcleo: foto HUD -->
+      <div class="core">
+        <span class="core__glow"></span>
+        <div class="core__frame"><img src="assets/otavio.jpg" alt="Otávio Designer" /><span class="core__scan"></span></div>
+        <b class="tl"></b><b class="tr"></b><b class="bl"></b><b class="br"></b>
+      </div>
+
+      <!-- nós de serviço -->
+      <div class="node n1"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 8h18"/><circle cx="6" cy="6" r=".6" fill="currentColor"/></svg></span><span class="node__lbl">Sites</span></div>
+      <div class="node n2"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M6 8h12M6 12h7M6 16h9"/></svg></span><span class="node__lbl">Landing</span></div>
+      <div class="node n3"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 8v8M20 8v8"/></svg></span><span class="node__lbl">Carross.</span></div>
+      <div class="node n4"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg></span><span class="node__lbl">Posts</span></div>
+      <div class="node n5"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.2 5.6L20 9.8l-4 3.9 1 5.8-5-3-5 3 1-5.8-4-3.9 5.8-1.2z"/></svg></span><span class="node__lbl">Criativos</span></div>
+      <div class="node n6"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg></span><span class="node__lbl">Apresent.</span></div>
+      <div class="node n7"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 15c0-5 4-11 7-12 3 1 7 7 7 12a7 7 0 0 1-14 0Z"/><circle cx="12" cy="12" r="2.2"/></svg></span><span class="node__lbl">Lançam.</span></div>
+      <div class="node n8"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v6c0 4.4-3 7-7 8-4-1-7-3.6-7-8V7z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></span><span class="node__lbl">ID Visual</span></div>
     </div>
 
-    <!-- NOME -->
+    <!-- NOME + SERVIÇOS -->
     <h1 class="name">Otávio Designer</h1>
-
-    <!-- SERVIÇOS (foco sequencial) -->
-    <div class="svc">
-      <div class="svc__lbl">Serviços</div>
-      <div class="svc__word in" id="svcWord">Sites</div>
-      <div class="svc__bar" aria-hidden="true"></div>
-    </div>
+    <div class="svc"><span class="tag">SERVIÇOS //</span><span class="w" id="svcWord">Sites</span><span class="cur">▍</span></div>
 
     <!-- SOCIAIS -->
     <div class="socials">
@@ -200,99 +249,28 @@
     <!-- BOTÕES -->
     <nav class="links" aria-label="Links">
 
-      <!-- AGÊNCIA 360 -->
       <a class="lk" href="https://astrus-acessoria.vercel.app/" target="_blank" rel="noopener">
-        <div class="lk__fx" aria-hidden="true">
-          <span class="gradient-layer" style="animation-delay:0s;animation-duration:26s"></span>
-          <span class="gradient-layer" style="animation-delay:.4s;animation-duration:18.6s"></span>
-          <span class="lk__light"></span>
-        </div>
-        <div class="lk__art">
-          <!-- TROQUE PELA SUA ARTE: descomente e aponte pro seu arquivo -->
-          <!-- <img src="assets/arte-agencia.jpg" alt=""> -->
-          <span class="wm" aria-hidden="true">
-            <svg viewBox="0 0 290.93 304.8" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#fff" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/>
-              <path fill="#fff" d="M0,233.1L.13,101.12c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.08.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/>
-            </svg>
-          </span>
-          <span class="hint">sua arte</span>
-        </div>
-        <div class="lk__body">
-          <div class="lk__title">Agência OCTA 360º</div>
-          <div class="lk__desc">Soluções de marketing 360 pra levar seu negócio pro próximo nível. Contrate minha equipe.</div>
-        </div>
-        <span class="lk__chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        <span class="lk__holo" aria-hidden="true"></span><span class="lk__glitch" aria-hidden="true"></span>
+        <span class="lk__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 0 0 18M12 3a14 14 0 0 1 0 18M3 12h18"/></svg></span>
+        <span class="lk__tx"><span class="lk__t">Astrus — Agência 360</span><span class="lk__s">Soluções de marketing 360 pro seu negócio. Contrate minha equipe.</span></span>
+        <span class="lk__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
 
-      <!-- SITE -->
-      <a class="lk" href="https://astrus-acessoria.vercel.app/" target="_blank" rel="noopener">
-        <div class="lk__fx" aria-hidden="true">
-          <span class="gradient-layer" style="animation-delay:0s;animation-duration:25s"></span>
-          <span class="gradient-layer" style="animation-delay:.53s;animation-duration:17.8s"></span>
-          <span class="lk__light"></span>
-        </div>
-        <div class="lk__art">
-          <!-- <img src="assets/arte-site.jpg" alt=""> -->
-          <span class="wm" aria-hidden="true">
-            <svg viewBox="0 0 290.93 304.8" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#fff" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/>
-              <path fill="#fff" d="M0,233.1L.13,101.12c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.08.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/>
-            </svg>
-          </span>
-          <span class="hint">sua arte</span>
-        </div>
-        <div class="lk__body">
-          <div class="lk__title">Orçamento no site</div>
-          <div class="lk__desc">Peça seu orçamento e conheça meu trabalho.</div>
-        </div>
-        <span class="lk__chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
-      </a>
-
-      <!-- BEHANCE -->
       <a class="lk" href="https://www.behance.net/otaviodesigner1_" target="_blank" rel="noopener">
-        <div class="lk__fx" aria-hidden="true">
-          <span class="gradient-layer" style="animation-delay:.2s;animation-duration:23s"></span>
-          <span class="gradient-layer" style="animation-delay:.6s;animation-duration:16.6s"></span>
-          <span class="lk__light"></span>
-        </div>
-        <div class="lk__art">
-          <!-- <img src="assets/arte-behance.jpg" alt=""> -->
-          <span class="wm" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="#fff"><path d="M8.3 6.9c.85 0 1.6.08 2.24.28.62.18 1.12.42 1.52.78.4.34.68.78.9 1.28.18.5.28 1.1.28 1.76 0 .74-.16 1.36-.5 1.86-.34.5-.86.92-1.54 1.24.92.26 1.6.72 2.06 1.38.44.64.68 1.44.68 2.36 0 .76-.16 1.42-.44 1.96-.3.56-.68 1-1.18 1.36-.5.34-1.08.6-1.72.76-.66.16-1.32.24-2 .24H2V6.9h6.3ZM7.9 11.5c.6 0 1.06-.16 1.44-.44.36-.28.52-.74.52-1.34 0-.34-.06-.62-.18-.84-.12-.22-.28-.4-.5-.52-.2-.12-.44-.2-.72-.24-.28-.04-.58-.06-.9-.06H4.9v3.48h3Zm.16 5.72c.34 0 .66-.02.96-.1.28-.06.54-.18.76-.34.2-.16.38-.36.5-.62.12-.26.18-.58.18-.96 0-.74-.2-1.28-.6-1.6-.42-.32-.96-.48-1.64-.48H4.9v4.1h3.16Zm10.02-1.66c.42.4.98.6 1.72.6.52 0 .98-.14 1.36-.4.38-.26.62-.54.7-.82h2.16c-.34 1.08-.88 1.86-1.6 2.34-.72.46-1.6.7-2.64.7-.72 0-1.36-.12-1.94-.34-.58-.24-1.06-.56-1.46-1-.4-.42-.72-.94-.92-1.54-.22-.6-.32-1.26-.32-2 0-.72.1-1.38.34-1.98.22-.62.56-1.14.98-1.58.42-.44.92-.78 1.5-1.02.58-.24 1.22-.36 1.92-.36.78 0 1.46.16 2.04.46.58.3 1.06.7 1.44 1.22.36.5.64 1.08.8 1.74.16.64.22 1.32.16 2.02h-6.66c0 .74.26 1.36.7 1.68Zm2.98-4.56c-.34-.36-.9-.56-1.56-.56-.44 0-.8.08-1.1.22-.28.16-.52.34-.68.56-.18.22-.3.44-.36.68-.06.24-.1.44-.12.62h4.12c-.06-.66-.28-1.1-.62-1.44ZM16.5 7.7h5.14v1.25H16.5V7.7Z"/></svg>
-          </span>
-          <span class="hint">sua arte</span>
-        </div>
-        <div class="lk__body">
-          <div class="lk__title">Behance</div>
-          <div class="lk__desc">Meu portfólio completo de projetos.</div>
-        </div>
-        <span class="lk__chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        <span class="lk__holo" aria-hidden="true"></span><span class="lk__glitch" aria-hidden="true"></span>
+        <span class="lk__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.3 6.9c.85 0 1.6.08 2.24.28.62.18 1.12.42 1.52.78.4.34.68.78.9 1.28.18.5.28 1.1.28 1.76 0 .74-.16 1.36-.5 1.86-.34.5-.86.92-1.54 1.24.92.26 1.6.72 2.06 1.38.44.64.68 1.44.68 2.36 0 .76-.16 1.42-.44 1.96-.3.56-.68 1-1.18 1.36-.5.34-1.08.6-1.72.76-.66.16-1.32.24-2 .24H2V6.9h6.3ZM7.9 11.5c.6 0 1.06-.16 1.44-.44.36-.28.52-.74.52-1.34 0-.34-.06-.62-.18-.84-.12-.22-.28-.4-.5-.52-.2-.12-.44-.2-.72-.24-.28-.04-.58-.06-.9-.06H4.9v3.48h3Zm.16 5.72c.34 0 .66-.02.96-.1.28-.06.54-.18.76-.34.2-.16.38-.36.5-.62.12-.26.18-.58.18-.96 0-.74-.2-1.28-.6-1.6-.42-.32-.96-.48-1.64-.48H4.9v4.1h3.16Zm10.02-1.66c.42.4.98.6 1.72.6.52 0 .98-.14 1.36-.4.38-.26.62-.54.7-.82h2.16c-.34 1.08-.88 1.86-1.6 2.34-.72.46-1.6.7-2.64.7-.72 0-1.36-.12-1.94-.34-.58-.24-1.06-.56-1.46-1-.4-.42-.72-.94-.92-1.54-.22-.6-.32-1.26-.32-2 0-.72.1-1.38.34-1.98.22-.62.56-1.14.98-1.58.42-.44.92-.78 1.5-1.02.58-.24 1.22-.36 1.92-.36.78 0 1.46.16 2.04.46.58.3 1.06.7 1.44 1.22.36.5.64 1.08.8 1.74.16.64.22 1.32.16 2.02h-6.66c0 .74.26 1.36.7 1.68Zm2.98-4.56c-.34-.36-.9-.56-1.56-.56-.44 0-.8.08-1.1.22-.28.16-.52.34-.68.56-.18.22-.3.44-.36.68-.06.24-.1.44-.12.62h4.12c-.06-.66-.28-1.1-.62-1.44ZM16.5 7.7h5.14v1.25H16.5V7.7Z"/></svg></span>
+        <span class="lk__tx"><span class="lk__t">Behance</span><span class="lk__s">Meu portfólio completo de projetos.</span></span>
+        <span class="lk__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
 
     </nav>
 
     <!-- RODAPÉ -->
     <div class="foot">
-      <span class="foot__by">by</span>
-      <a class="foot__logo" href="https://astrus-acessoria.vercel.app/" target="_blank" rel="noopener" aria-label="OCTA">
-        <svg viewBox="0 0 1426.53 304.79" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#fff" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.9-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/>
-          <path fill="rgba(255,255,255,.66)" d="M290.93,71.69l-.12,124.26c-7.55,7.66-20.58,18.96-39.65,27.23-15.14,6.56-28.82,8.95-38.46,9.84,1.36-.1,6.56-.62,10.8-4.91,5.19-5.25,4.85-11.99,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/>
-          <path fill="#fff" d="M0,233.1L.13,101.11c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.07.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.9,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/>
-          <path fill="rgba(255,255,255,.66)" d="M0,233.1l.12-124.26c7.55-7.66,20.58-18.96,39.65-27.23,15.14-6.56,28.82-8.95,38.46-9.84-1.36.1-6.56.62-10.8,4.91-5.19,5.25-4.85,11.99-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/>
-          <path fill="#fff" d="M443.84,215.03c-11.94,0-22.61-2.74-32-8.22-9.4-5.48-16.84-13.08-22.32-22.81-5.48-9.73-8.22-20.88-8.22-33.48s2.74-24.24,8.22-33.97c5.48-9.73,12.96-17.33,22.44-22.81,9.48-5.48,20.19-8.22,32.13-8.22s22.56,2.74,31.88,8.22c9.32,5.48,16.71,13.04,22.2,22.69,5.48,9.65,8.22,20.93,8.22,33.84s-2.74,24-8.22,33.72c-5.48,9.73-12.92,17.33-22.32,22.81-9.4,5.48-20.07,8.22-32,8.22ZM443.84,186.34c5.23,0,10.01-1.35,14.35-4.05,4.33-2.7,7.85-6.74,10.55-12.14,2.7-5.4,4.05-12.02,4.05-19.87s-1.31-14.67-3.92-19.99c-2.62-5.31-6.05-9.32-10.3-12.02-4.25-2.7-8.99-4.05-14.22-4.05s-10.3,1.35-14.71,4.05c-4.41,2.7-7.93,6.71-10.55,12.02-2.62,5.32-3.92,11.98-3.92,19.99s1.26,14.47,3.8,19.87c2.53,5.4,6.01,9.44,10.42,12.14,4.41,2.7,9.24,4.05,14.47,4.05Z"/>
-          <path fill="#fff" d="M579.95,215.03c-12.43,0-23.46-2.78-33.11-8.34-9.65-5.56-17.17-13.16-22.56-22.81-5.4-9.65-8.09-20.6-8.09-32.86,0-13.08,2.7-24.48,8.09-34.21,5.4-9.73,12.91-17.37,22.56-22.93,9.65-5.56,20.68-8.34,33.11-8.34,15.86,0,29.18,4.13,39.98,12.38,10.79,8.26,17.66,19.66,20.6,34.21h-35.07c-1.47-5.56-4.5-10.01-9.07-13.37-4.58-3.35-10.14-5.03-16.68-5.03-5.72,0-10.83,1.47-15.33,4.41-4.5,2.94-8.01,7.11-10.54,12.51-2.54,5.4-3.8,11.94-3.8,19.62,0,5.56.74,10.63,2.21,15.21,1.47,4.58,3.51,8.42,6.13,11.53,2.61,3.11,5.72,5.52,9.32,7.23,3.59,1.72,7.6,2.58,12.02,2.58s8.13-.74,11.65-2.21c3.51-1.47,6.5-3.59,8.95-6.38,2.45-2.78,4.17-6.05,5.15-9.81h35.07c-2.94,14.06-9.85,25.34-20.72,33.84-10.88,8.5-24.16,12.75-39.85,12.75Z"/>
-          <path fill="#fff" d="M708.46,212.09c-8.5,0-16.03-1.35-22.56-4.05-6.54-2.7-11.61-7.19-15.21-13.49-3.6-6.29-5.4-14.92-5.4-25.87v-52.48h-21.34v-27.71h21.34l3.68-33.84h29.43v33.84h32.62v27.71h-32.62v52.97c0,5.56,1.23,9.4,3.68,11.53,2.45,2.13,6.62,3.19,12.51,3.19h15.94v28.2h-22.07Z"/>
-          <path fill="#fff" d="M785.96,215.03c-10.14,0-18.56-1.68-25.26-5.03-6.71-3.35-11.73-7.85-15.08-13.49-3.35-5.64-5.03-11.89-5.03-18.76,0-7.68,1.92-14.38,5.76-20.11,3.84-5.72,9.69-10.18,17.54-13.37,7.85-3.19,17.82-4.78,29.92-4.78h30.17c0-6.21-.78-11.28-2.33-15.21-1.56-3.92-4.09-6.87-7.6-8.83-3.52-1.96-8.13-2.94-13.86-2.94-6.21,0-11.49,1.31-15.82,3.92-4.33,2.62-6.99,6.79-7.97,12.51h-32.13c.82-8.99,3.72-16.68,8.71-23.05,4.99-6.38,11.61-11.36,19.87-14.96,8.25-3.59,17.45-5.4,27.59-5.4,11.61,0,21.71,1.92,30.29,5.76,8.58,3.84,15.12,9.48,19.62,16.92,4.5,7.44,6.74,16.47,6.74,27.1v76.76h-27.71l-3.68-18.88c-1.8,3.27-3.97,6.21-6.5,8.83-2.54,2.62-5.48,4.9-8.83,6.87-3.35,1.96-6.99,3.47-10.91,4.54-3.92,1.06-8.42,1.59-13.49,1.59ZM794.05,189.53c4.08,0,7.81-.77,11.16-2.33,3.35-1.55,6.25-3.72,8.71-6.5,2.45-2.78,4.41-5.89,5.89-9.32s2.45-7.19,2.94-11.28v-.25h-25.26c-5.23,0-9.44.61-12.63,1.84-3.19,1.23-5.52,2.99-6.99,5.27-1.47,2.29-2.21,4.91-2.21,7.85,0,3.11.74,5.76,2.21,7.97,1.47,2.21,3.64,3.88,6.5,5.03,2.86,1.15,6.09,1.72,9.69,1.72Z"/>
-          <path fill="#fff" d="M903.68,215.03c-8.34,0-15.7-1.39-22.07-4.17-6.38-2.78-11.2-7.11-14.47-13-3.27-5.89-4.5-13.57-3.68-23.05h5.15c-.98,8.18.16,14.88,3.43,20.11,3.27,5.23,7.85,9.07,13.73,11.53,5.89,2.45,12.18,3.68,18.88,3.68s13.45-1.26,19.25-3.8c5.8-2.53,10.55-5.97,14.22-10.3,3.68-4.33,6.09-9.36,7.23-15.08,1.14-6.87.77-12.1-1.1-15.7-1.88-3.59-5.36-6.42-10.42-8.46-5.07-2.04-11.77-3.96-20.11-5.76-6.54-1.31-12.06-2.98-16.55-5.03-4.5-2.04-8.09-4.37-10.79-6.99-2.7-2.61-4.5-5.68-5.39-9.2-.9-3.51-.94-7.64-.12-12.38,1.14-6.21,3.68-11.73,7.6-16.55,3.92-4.82,8.95-8.58,15.08-11.28,6.13-2.7,13.12-4.05,20.97-4.05,10.79,0,19.37,3.03,25.75,9.07,6.38,6.05,9.15,15.21,8.34,27.47h-5.4c1.14-9.48-.78-17.12-5.76-22.93-4.99-5.8-12.96-8.71-23.91-8.71s-19.21,2.54-25.75,7.6c-6.54,5.07-10.38,11.61-11.53,19.62-.82,4.25-.7,8.09.37,11.53,1.06,3.43,3.72,6.54,7.97,9.32,4.25,2.78,10.63,5.23,19.13,7.36,5.89,1.31,11.32,2.7,16.31,4.17,4.99,1.47,9.24,3.4,12.75,5.76,3.51,2.37,6.01,5.48,7.48,9.32,1.47,3.84,1.72,8.87.74,15.08-1.15,6.71-3.84,12.67-8.09,17.9-4.25,5.24-9.73,9.36-16.43,12.39-6.71,3.02-14.31,4.54-22.81,4.54Z"/>
-          <path fill="#fff" d="M996.62,212.09c-6.05,0-10.91-.9-14.59-2.7-3.68-1.8-6.13-4.91-7.36-9.32-1.23-4.41-1.19-10.38.12-17.9l15.94-89.27h-21.58l.74-4.41h21.58l5.4-25.26h3.92l-4.41,25.26h40.47l-.98,4.41h-40.47l-15.7,89.27c-1.64,8.99-1.07,15.49,1.72,19.5,2.78,4.01,8.25,6.01,16.43,6.01h14.71l-.98,4.41h-14.96Z"/>
-          <path fill="#fff" d="M1066.52,215.03c-8.5,0-15.86-1.68-22.07-5.03-6.21-3.35-10.67-8.66-13.37-15.94-2.7-7.27-2.91-16.88-.61-28.82l13.49-76.76h4.91l-13.49,75.54c-2.78,15.7-1.35,27.31,4.29,34.83,5.64,7.52,15,11.28,28.08,11.28,8.83,0,16.88-2.08,24.16-6.25,7.27-4.17,13.49-10.3,18.64-18.39s8.62-18.03,10.42-29.8l12.02-67.2h4.9l-21.58,123.6h-3.92l3.19-27.71c-6.38,10.96-13.86,18.8-22.44,23.54-8.58,4.74-17.45,7.11-26.61,7.11Z"/>
-          <path fill="#fff" d="M1186.2,215.03c-11.77,0-21.46-2.78-29.06-8.34s-12.84-13.2-15.7-22.93c-2.86-9.73-3.15-20.8-.86-33.23,1.63-9.32,4.45-17.94,8.46-25.87,4-7.93,8.99-14.79,14.96-20.6,5.97-5.8,12.79-10.34,20.48-13.61,7.68-3.27,16.02-4.91,25.01-4.91,13.24,0,23.91,3.89,32,11.65,8.09,7.77,12.71,18.19,13.86,31.27l16.68-92.95h4.91l-31.15,176.58h-3.92l4.91-38.75c-3.76,8.34-8.79,15.57-15.08,21.7-6.3,6.13-13.29,11-20.97,14.59-7.69,3.59-15.86,5.4-24.52,5.4ZM1187.18,210.13c10.3,0,19.78-2.61,28.45-7.85,8.66-5.23,16.02-12.34,22.07-21.34,6.05-8.99,10.05-19.21,12.02-30.66,2.12-11.44,1.8-21.66-.98-30.66-2.78-8.99-7.56-16.1-14.35-21.34-6.79-5.23-15.25-7.85-25.38-7.85s-19.62,2.41-28.45,7.23c-8.83,4.83-16.23,11.73-22.2,20.72-5.97,8.99-10.1,19.62-12.38,31.88-2.13,12.1-1.8,22.65.98,31.64,2.78,8.99,7.64,15.94,14.59,20.85,6.95,4.91,15.49,7.36,25.63,7.36Z"/>
-          <path fill="#fff" d="M1267.13,212.09l21.83-123.6h4.91l-21.83,123.6h-4.91ZM1299.01,50.23c-1.15,0-2.17-.37-3.07-1.1-.9-.74-1.43-1.84-1.59-3.31,0-1.47.49-2.66,1.47-3.56.98-.9,2.04-1.35,3.19-1.35s2.21.45,3.19,1.35c.98.9,1.47,2.08,1.47,3.56.16,1.47-.25,2.57-1.23,3.31-.98.74-2.13,1.1-3.43,1.1Z"/>
-          <path fill="#fff" d="M1344.62,215.03c-11.28,0-20.85-2.58-28.69-7.73-7.85-5.15-13.41-12.59-16.68-22.32-3.27-9.73-3.76-21.29-1.47-34.7,1.8-9.97,4.86-18.96,9.2-26.98,4.33-8.01,9.69-14.8,16.06-20.36,6.38-5.56,13.37-9.85,20.97-12.88,7.6-3.02,15.57-4.54,23.91-4.54,11.28,0,20.88,2.58,28.82,7.73,7.93,5.15,13.61,12.59,17.04,22.32,3.43,9.73,3.92,21.3,1.47,34.7-1.8,10.3-4.91,19.42-9.32,27.35-4.42,7.93-9.81,14.68-16.19,20.23-6.38,5.56-13.41,9.81-21.09,12.75-7.69,2.94-15.7,4.42-24.03,4.42ZM1345.36,210.13c9.32,0,18.47-2.21,27.47-6.62,8.99-4.41,16.84-11.07,23.54-19.99,6.7-8.91,11.2-19.9,13.49-32.99,2.29-13.4,1.72-24.53-1.72-33.35-3.43-8.83-8.79-15.49-16.06-19.99-7.28-4.5-15.41-6.74-24.4-6.74-9.48,0-18.68,2.25-27.59,6.74-8.91,4.5-16.68,11.16-23.3,19.99-6.62,8.83-11.16,19.87-13.61,33.11-2.29,13.24-1.76,24.32,1.59,33.23,3.35,8.91,8.66,15.57,15.94,19.99,7.27,4.42,15.49,6.62,24.65,6.62Z"/>
-          <path fill="#fff" d="M1418.44,213.32c-2.13,0-4.01-.82-5.64-2.45-1.63-1.63-2.45-3.51-2.45-5.64,0-2.29.82-4.21,2.45-5.76,1.63-1.55,3.51-2.33,5.64-2.33,2.29,0,4.21.78,5.76,2.33,1.55,1.56,2.33,3.48,2.33,5.76,0,2.13-.78,4.01-2.33,5.64-1.56,1.63-3.48,2.45-5.76,2.45Z"/>
-        </svg>
+      <span>by</span>
+      <a href="https://astrus-acessoria.vercel.app/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 290.93 304.8" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/><path fill="#fff" d="M0,233.1L.13,101.12c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.08.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/></svg>
+        OCTA
       </a>
     </div>
 
@@ -300,36 +278,87 @@
 </main>
 
 <script>
-// ===== Serviços: foco sequencial com wipe esquerda->direita =====
+// ===== serviços: caption em loop =====
 (function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var services = ["Sites","Landing Pages","Carrosséis","Post","Criativos","Apresentações","Lançamentos","Identidade Visual"];
-  var w = document.getElementById('svcWord');
-  if(!w) return;
-  if(reduce){
-    var ri=0;
-    setInterval(function(){ ri=(ri+1)%services.length; w.textContent=services[ri]; }, 2200);
-    return;
-  }
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var s = ["Sites","Landing Pages","Carrosséis","Posts","Criativos","Apresentações","Lançamentos","Identidade Visual"];
+  var el = document.getElementById('svcWord'); if(!el) return;
   var i=0;
-  function loop(){
-    // segura visível, depois some (wipe) e troca
-    setTimeout(function(){
-      w.classList.remove('in'); void w.offsetWidth; w.classList.add('out');
-      setTimeout(function(){
-        i=(i+1)%services.length; w.textContent=services[i];
-        w.classList.remove('out'); void w.offsetWidth; w.classList.add('in');
-        loop();
-      }, 600);
-    }, 1700);
-  }
-  loop();
+  setInterval(function(){
+    if(reduce){ i=(i+1)%s.length; el.textContent=s[i]; return; }
+    el.style.opacity=0; el.style.transform='translateX(6px)';
+    setTimeout(function(){ i=(i+1)%s.length; el.textContent=s[i]; el.style.opacity=1; el.style.transform='translateX(0)'; },320);
+  }, 2100);
 })();
-</script>
 
-<!-- UnicornStudio (fundo) -->
-<script type="text/javascript">
-  !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+// ===== botões: cursor -> posição do glitch/inversão =====
+(function(){
+  document.querySelectorAll('.lk').forEach(function(btn){
+    btn.addEventListener('pointermove', function(e){
+      var r = btn.getBoundingClientRect();
+      btn.style.setProperty('--mx', (e.clientX-r.left)+'px');
+      btn.style.setProperty('--my', (e.clientY-r.top)+'px');
+    }, {passive:true});
+  });
+})();
+
+// ===== fundo: rede de partículas reativa ao cursor (HUD vermelho) =====
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var c = document.getElementById('net'); if(!c) return;
+  var x = c.getContext('2d');
+  var W,H,DPR,P=[],N=0,mx=-9999,my=-9999,raf;
+  function size(){
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    W=innerWidth;H=innerHeight;
+    c.width=W*DPR;c.height=H*DPR;c.style.width=W+'px';c.style.height=H+'px';
+    x.setTransform(DPR,0,0,DPR,0,0);
+    N=Math.min(54,Math.round(W*H/26000));
+    P=[];for(var i=0;i<N;i++){P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25});}
+  }
+  size();addEventListener('resize',size);
+  addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;},{passive:true});
+  addEventListener('pointerleave',function(){mx=-9999;my=-9999;});
+  addEventListener('touchmove',function(e){var t=e.touches[0];if(t){mx=t.clientX;my=t.clientY;}},{passive:true});
+
+  var D=118, DM=190;
+  function frame(){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<N;i++){
+      var p=P[i];
+      // leve atração ao cursor
+      var dxm=mx-p.x, dym=my-p.y, dm2=dxm*dxm+dym*dym;
+      if(dm2<DM*DM){ var f=(1-Math.sqrt(dm2)/DM)*.04; p.vx+=dxm*f*.02; p.vy+=dym*f*.02; }
+      p.x+=p.vx;p.y+=p.vy;
+      p.vx*=.99;p.vy*=.99;
+      if(p.x<0)p.x+=W; if(p.x>W)p.x-=W; if(p.y<0)p.y+=H; if(p.y>H)p.y-=H;
+    }
+    // conexões entre partículas
+    for(var a=0;a<N;a++){
+      for(var b=a+1;b<N;b++){
+        var dx=P[a].x-P[b].x, dy=P[a].y-P[b].y, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<D){ var al=(1-d/D)*.16; x.strokeStyle='rgba(255,70,58,'+al.toFixed(3)+')'; x.lineWidth=.6; x.beginPath();x.moveTo(P[a].x,P[a].y);x.lineTo(P[b].x,P[b].y);x.stroke(); }
+      }
+    }
+    // conexões ao cursor + glow
+    if(mx>-9998){
+      var grd=x.createRadialGradient(mx,my,0,mx,my,DM);
+      grd.addColorStop(0,'rgba(229,36,33,.12)');grd.addColorStop(1,'rgba(229,36,33,0)');
+      x.fillStyle=grd;x.beginPath();x.arc(mx,my,DM,0,6.2832);x.fill();
+      for(var k=0;k<N;k++){
+        var ex=P[k].x-mx, ey=P[k].y-my, ed=Math.sqrt(ex*ex+ey*ey);
+        if(ed<DM){ var ea=(1-ed/DM)*.5; x.strokeStyle='rgba(255,90,74,'+ea.toFixed(3)+')'; x.lineWidth=.8; x.beginPath();x.moveTo(mx,my);x.lineTo(P[k].x,P[k].y);x.stroke(); }
+      }
+    }
+    // pontos
+    for(var m=0;m<N;m++){
+      x.fillStyle='rgba(255,90,74,.75)';x.beginPath();x.arc(P[m].x,P[m].y,1.3,0,6.2832);x.fill();
+    }
+    if(!reduce) raf=requestAnimationFrame(frame);
+  }
+  if(reduce){ frame(); } else { raf=requestAnimationFrame(frame); }
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden&&!reduce){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);} });
+})();
 </script>
 </body>
 </html>
