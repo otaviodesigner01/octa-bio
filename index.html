@@ -44,22 +44,11 @@
   ::selection{background:var(--red);color:#fff;}
 
   /* ============ FUNDO EM CÓDIGO (espectro + degradê, leve) ============ */
-  /* fundo: espectro vermelho em código (leve) + brilho que segue o cursor */
-  .bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;background:radial-gradient(130% 120% at 68% 26%,#1a0809 0%,#0b0708 58%,#070506 100%);will-change:transform;}
-  .blob{position:absolute;border-radius:50%;filter:blur(56px);mix-blend-mode:screen;will-change:transform;}
-  .b1{width:78vmax;height:78vmax;left:-16vmax;top:-20vmax;background:radial-gradient(closest-side,rgba(229,36,33,.6),transparent 70%);animation:d1 24s var(--ease) infinite;}
-  .b2{width:64vmax;height:64vmax;right:-18vmax;top:4vmax;background:radial-gradient(closest-side,rgba(255,122,61,.5),transparent 70%);animation:d2 29s var(--ease) infinite;}
-  .b3{width:60vmax;height:60vmax;left:4vmax;bottom:-26vmax;background:radial-gradient(closest-side,rgba(180,0,0,.55),transparent 70%);animation:d3 33s var(--ease) infinite;}
-  .b4{width:46vmax;height:46vmax;right:0;bottom:-8vmax;background:radial-gradient(closest-side,rgba(170,28,96,.34),transparent 70%);animation:d4 27s var(--ease) infinite;}
-  .sweep{position:absolute;inset:-35%;background:conic-gradient(from 0deg at 62% 38%,transparent 0deg,rgba(229,36,33,.2) 40deg,rgba(255,122,61,.16) 90deg,rgba(170,28,96,.12) 140deg,transparent 200deg);filter:blur(42px);mix-blend-mode:screen;will-change:transform;animation:spin 46s linear infinite;}
-  .cursor-glow{position:fixed;top:0;left:0;width:46vmax;height:46vmax;margin:-23vmax 0 0 -23vmax;border-radius:50%;z-index:1;pointer-events:none;opacity:0;
-    background:radial-gradient(closest-side,rgba(255,74,52,.55),rgba(229,36,33,.2) 45%,transparent 72%);mix-blend-mode:screen;filter:blur(8px);
-    transform:translate3d(-100vw,-100vh,0);will-change:transform,opacity;transition:opacity .5s var(--ease);}
-  @keyframes d1{0%,100%{transform:translate(0,0)}50%{transform:translate(9vmax,7vmax)}}
-  @keyframes d2{0%,100%{transform:translate(0,0)}50%{transform:translate(-8vmax,6vmax)}}
-  @keyframes d3{0%,100%{transform:translate(0,0)}50%{transform:translate(7vmax,-8vmax)}}
-  @keyframes d4{0%,100%{transform:translate(0,0)}50%{transform:translate(-6vmax,-6vmax)}}
-  @keyframes spin{to{transform:rotate(360deg)}}
+  /* fundo: embed UnicornStudio + tint vermelho */
+  .bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;isolation:isolate;background:#0a0a0b;}
+  .us-embed{position:absolute;inset:0;width:100%;height:100%;}
+  .us-embed canvas{display:block;width:100%;height:100%;}
+  .us-tint{position:absolute;inset:0;background:rgba(255,0,0,.5);mix-blend-mode:color;pointer-events:none;}
   .bg-veil{position:fixed;inset:0;z-index:2;pointer-events:none;
     background:
       radial-gradient(62% 40% at 50% 34%, rgba(8,7,8,.6) 0%, rgba(8,7,8,.26) 52%, transparent 80%),
@@ -125,12 +114,8 @@
   .lk:active{transform:translateY(-1px) scale(.995);}
 
   /* efeito breezy-zebra (paleta OCTA) */
-  .lk__fx{position:absolute;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 140% at 100% 0%,#2a0d0d,#120809 60%,#0c0708);}
-  .gradient-layer{position:absolute;inset:-55%;border-radius:46%;mix-blend-mode:screen;filter:blur(20px);opacity:.5;
-    background:conic-gradient(from 0deg,transparent 0deg,var(--red-deep) 55deg,var(--red) 135deg,var(--red-3) 205deg,var(--red-2) 285deg,transparent 360deg);
-    animation:zspin linear infinite;will-change:transform;}
-  .gradient-layer:nth-child(2n){animation-direction:reverse;opacity:.42;}
-  @keyframes zspin{to{transform:rotate(360deg);}}
+  .lk__fx{position:absolute;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(118deg,#7a0f0d 0%,#e52421 46%,#ff7a3d 78%,#a00000 100%);}
+  .gradient-layer{display:none;}
   .lk__light{position:absolute;inset:0;background:radial-gradient(70% 120% at 18% -20%,rgba(255,255,255,.15),transparent 55%);}
 
   .lk__art{position:relative;flex:none;width:46%;max-width:230px;overflow:hidden;
@@ -165,8 +150,7 @@
     .lk__desc{font-size:12.8px;}
   }
   @media (prefers-reduced-motion:reduce){
-    .blob,.sweep,.gradient-layer,.ring-text,.svc__bar{animation:none;}
-    .cursor-glow{display:none;}
+    .ring-text,.svc__bar{animation:none;}
     .ring-text{opacity:.75;}
     .svc__word.in,.svc__word.out{animation:none;-webkit-mask:none;mask:none;opacity:1;}
   }
@@ -174,11 +158,10 @@
 </head>
 <body>
 
-<div class="bgfx" id="bgfx" aria-hidden="true">
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
-  <span class="sweep"></span>
+<div class="bgfx" aria-hidden="true">
+  <div data-us-project="tPmIIl0vKqHO9yqmtge2" data-us-fps="30" class="us-embed"></div>
+  <div class="us-tint"></div>
 </div>
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 <div class="bg-veil" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
@@ -344,30 +327,9 @@
 })();
 </script>
 
-<!-- brilho vermelho que segue o cursor (+ parallax no fundo) -->
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var glow = document.getElementById('cursorGlow');
-  var bgfx = document.getElementById('bgfx');
-  if(!glow || reduce) return;
-  var tx=window.innerWidth/2, ty=window.innerHeight/2, gx=tx, gy=ty, raf=null, shown=false;
-  function move(e){
-    var p = e.touches ? e.touches[0] : e; if(!p) return;
-    tx=p.clientX; ty=p.clientY;
-    if(!shown){ glow.style.opacity='1'; shown=true; }
-    if(!raf) raf=requestAnimationFrame(tick);
-  }
-  window.addEventListener('pointermove', move, {passive:true});
-  window.addEventListener('touchmove', move, {passive:true});
-  function tick(){
-    gx += (tx-gx)*0.14; gy += (ty-gy)*0.14;
-    glow.style.transform = 'translate3d('+gx+'px,'+gy+'px,0)';
-    var nx=(gx/window.innerWidth-0.5), ny=(gy/window.innerHeight-0.5);
-    if(bgfx) bgfx.style.transform = 'translate3d('+(nx*-16)+'px,'+(ny*-16)+'px,0)';
-    if(Math.abs(tx-gx)>0.4 || Math.abs(ty-gy)>0.4){ raf=requestAnimationFrame(tick); } else { raf=null; }
-  }
-})();
+<!-- UnicornStudio (fundo) -->
+<script type="text/javascript">
+  !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
 </script>
 </body>
 </html>
