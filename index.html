@@ -317,7 +317,7 @@
   if(reduce){ nodes.forEach(function(n){n.style.opacity=1;}); sweep.style.display='none'; return; }
   var lit = nodes.map(function(){return 0;}), raf;
   function loop(now){
-    var s = -86 + ((now*0.04) % 172);          // meia-lua: varre -86 -> 86 e RECOMEÇA (sem voltar)
+    var s = -86 + ((now*0.024) % 172);         // meia-lua: varre -86 -> 86 e RECOMEÇA (mais lento, ~7s)
     sweep.style.transform = 'rotate('+s+'deg)';
     for(var i=0;i<nodes.length;i++){
       if(Math.abs(s-angs[i]) < 7) lit[i]=1; else lit[i]*=0.955;  // acende ao passar, some depois
