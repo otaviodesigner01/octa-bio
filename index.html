@@ -70,7 +70,7 @@
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,52,.5)}70%{box-shadow:0 0 0 6px rgba(255,59,52,0)}100%{box-shadow:0 0 0 0 rgba(255,59,52,0)}}
 
   /* ---------- ORGCHART: foto no centro + nós de serviços ---------- */
-  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-100px,-21vw,-58px);}
+  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-46px,-9vw,-24px);}
   .radar{position:absolute;inset:0;pointer-events:none;}
   .radar__rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .radar__rings path{fill:none;stroke:rgba(255,70,58,.16);stroke-width:.4;}
@@ -82,24 +82,12 @@
     background:conic-gradient(from 0deg,transparent 0deg,transparent 358.6deg,rgba(255,180,150,.95) 360deg);}
 
   /* foto central — moldura HUD retangular */
-  .core{position:absolute;top:50%;left:50%;width:34%;aspect-ratio:1/1;transform:translate(-50%,-50%);}
-  .core__frame{position:relative;width:100%;height:100%;border-radius:16px;overflow:hidden;
-    border:1px solid rgba(255,90,74,.45);
-    box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 34px rgba(229,36,33,.4),inset 0 0 22px rgba(0,0,0,.5);}
-  .core__frame img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;}
-  .core__frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(229,36,33,.12),transparent 40%,rgba(7,7,11,.35));mix-blend-mode:overlay;}
-  .core__scan{position:absolute;left:0;right:0;height:26%;pointer-events:none;
-    background:linear-gradient(180deg,transparent,rgba(255,90,74,.22),transparent);animation:scan 3.4s var(--ease) infinite;}
-  @keyframes scan{0%{top:-26%}100%{top:100%}}
-  /* cantos HUD */
-  .core b{position:absolute;width:14px;height:14px;border:2px solid var(--red-2);filter:drop-shadow(0 0 4px rgba(255,59,52,.7));}
-  .core b.tl{top:-6px;left:-6px;border-right:0;border-bottom:0;}
-  .core b.tr{top:-6px;right:-6px;border-left:0;border-bottom:0;}
-  .core b.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;}
-  .core b.br{bottom:-6px;right:-6px;border-left:0;border-top:0;}
-  .core__glow{position:absolute;inset:-30% -30%;z-index:-1;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(229,36,33,.4),transparent 70%);filter:blur(6px);animation:breathe 5s var(--ease) infinite;}
-  @keyframes breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+  .core{position:absolute;top:52%;left:50%;width:52%;aspect-ratio:1080/1350;transform:translate(-50%,-50%);}
+  .core__frame{position:relative;width:100%;height:100%;}
+  .core__frame img{width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));}
+  .core__glow{position:absolute;inset:-14% -20%;z-index:-1;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(229,36,33,.4),transparent 72%);filter:blur(10px);animation:breathe 5s var(--ease) infinite;}
+  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.06)}}
 
   /* nós de serviço */
   .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;
@@ -208,11 +196,10 @@
         <div class="radar__half"><div class="radar__sweep"></div></div>
       </div>
 
-      <!-- núcleo: foto HUD -->
+      <!-- núcleo: foto (sem moldura, recorte que blenda) -->
       <div class="core">
         <span class="core__glow"></span>
-        <div class="core__frame"><img src="assets/otavio.jpg" alt="Otávio Designer" /><span class="core__scan"></span></div>
-        <b class="tl"></b><b class="tr"></b><b class="bl"></b><b class="br"></b>
+        <div class="core__frame"><img src="assets/otavio-hero.png" alt="Otávio Designer" /></div>
       </div>
 
       <!-- nós de serviço (meia-lua) -->
