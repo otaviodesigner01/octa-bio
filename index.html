@@ -65,12 +65,13 @@
   .topbar{width:100%;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:clamp(12px,3vw,22px);}
   .topbar .brand{display:flex;align-items:center;gap:8px;color:var(--muted);}
   .topbar .brand svg{width:15px;height:15px;}
-  .topbar .status{display:inline-flex;align-items:center;gap:7px;color:var(--red-2);}
+  .topbar .status{display:inline-flex;align-items:center;gap:7px;color:var(--red-2);animation:slowblink 3.4s ease-in-out infinite;}
   .topbar .status .dot{width:6px;height:6px;border-radius:50%;background:var(--red-2);box-shadow:0 0 8px var(--red-2);animation:pulse 2s infinite;}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,52,.5)}70%{box-shadow:0 0 0 6px rgba(255,59,52,0)}100%{box-shadow:0 0 0 0 rgba(255,59,52,0)}}
+  @keyframes slowblink{0%,100%{opacity:1}50%{opacity:.35}}
 
   /* ---------- ORGCHART: foto no centro + nós de serviços ---------- */
-  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-46px,-9vw,-24px);}
+  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-16px,-3vw,-4px);}
   .radar{position:absolute;inset:0;pointer-events:none;}
   .radar__rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .radar__rings path{fill:none;stroke:rgba(255,70,58,.16);stroke-width:.4;}
@@ -82,7 +83,7 @@
     background:conic-gradient(from 0deg,transparent 0deg,transparent 358.6deg,rgba(255,180,150,.95) 360deg);}
 
   /* foto central — moldura HUD retangular */
-  .core{position:absolute;top:52%;left:50%;width:52%;aspect-ratio:1080/1350;transform:translate(-50%,-50%);}
+  .core{position:absolute;top:53%;left:50%;width:70%;aspect-ratio:1080/1350;transform:translate(-50%,-50%);}
   .core__frame{position:relative;width:100%;height:100%;}
   .core__frame img{width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));}
   .core__glow{position:absolute;inset:-14% -20%;z-index:-1;border-radius:50%;
@@ -131,6 +132,14 @@
     box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 16px 40px rgba(0,0,0,.5);
     transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);will-change:transform;}
   .lk:hover{transform:translateY(-3px);border-color:rgba(255,120,90,.55);box-shadow:0 0 30px rgba(229,36,33,.22),0 22px 50px rgba(0,0,0,.55);}
+  /* borda com brilho que passa (border beam) no hover */
+  @property --beam{syntax:'<angle>';inherits:false;initial-value:0deg;}
+  .lk::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.6px;z-index:6;pointer-events:none;opacity:0;transition:opacity .35s var(--ease);
+    background:conic-gradient(from var(--beam,0deg),transparent 0deg,transparent 60%,rgba(255,90,74,.5) 74%,#fff 82%,rgba(255,90,74,.5) 90%,transparent 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;}
+  .lk:hover::after{opacity:1;animation:beamspin 2.2s linear infinite;}
+  @keyframes beamspin{to{--beam:360deg;}}
   .lk:active{transform:translateY(-1px) scale(.996);}
   .lk__art{position:relative;width:100%;aspect-ratio:323/186;overflow:hidden;background:#120a0b;}
   .lk__art img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -164,7 +173,7 @@
     .lk__t{font-size:15.5px;}
   }
   @media (prefers-reduced-motion:reduce){
-    .core__glow,.topbar .status .dot,.lk__holo,.svc .cur{animation:none;}
+    .core__glow,.topbar .status,.topbar .status .dot,.lk__holo,.svc .cur{animation:none;}
   }
 </style>
 </head>
@@ -181,7 +190,7 @@
     <div class="topbar">
       <span class="brand">
         <svg viewBox="0 0 290.93 304.8" xmlns="http://www.w3.org/2000/svg"><path fill="#e52421" d="M290.93,71.69l-.13,131.99c0,6.1-2.88,13.15-7.1,17.42l-74.74,75.44c-5.69,5.74-13.1,8.21-21.15,8.21l-114.3-.03c-9.95.86-17.98-6.04-18.5-16.28.41-4.67,1.79-9.04,5.02-12.28l35.76-35.93c4.37-4.39,10.68-7.1,16.93-7.1l98.9-.07c1.73,0,3.44-.29,5.07-.81,2.61-.83,4.98-2.28,6.83-4.14,3.41-3.45,4.78-8.1,4.78-13.05v-123.83c.01-4.63,1.86-9.67,4.97-12.81l32.91-33.33c1.65-1.67,4.24-1.36,5.77.17l13.88,13.87c3.11,3.11,5.13,7.88,5.13,12.56Z"/><path fill="#e52421" d="M0,233.1L.13,101.12c0-6.1,2.88-13.15,7.1-17.42L81.97,8.25C87.67,2.51,95.08.04,103.12.04l114.3.03c9.95-.86,17.98,6.04,18.5,16.28-.41,4.67-1.79,9.04-5.02,12.28l-35.76,35.93c-4.37,4.39-10.68,7.1-16.93,7.1l-98.9.07c-1.73,0-3.44.29-5.07.81-2.61.83-4.98,2.28-6.83,4.14-3.41,3.45-4.78,8.1-4.78,13.05v123.83c-.01,4.63-1.86,9.67-4.97,12.81l-32.91,33.33c-1.65,1.67-4.24,1.36-5.77-.17l-13.88-13.87C2.02,242.55,0,237.79,0,233.1Z"/></svg>
-        OTÁVIO·SYS
+        OTÁVIO DESIGNER
       </span>
       <span class="status"><span class="dot"></span>Disponível p/ projetos</span>
     </div>
@@ -219,8 +228,8 @@
       <a class="social" href="https://www.instagram.com/otaviodesigner1/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5.4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
       </a>
-      <a class="social" href="mailto:otaviodsgcomercial@gmail.com" aria-label="Email">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="3.2"/><path d="m4 7 8 5.5L20 7"/></svg>
+      <a class="social" href="https://wa.me/5535991409445" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24Zm-4.6 4.42c-.22 0-.57.08-.87.4-.3.33-1.14 1.12-1.14 2.72s1.17 3.16 1.33 3.38c.16.22 2.28 3.48 5.53 4.88.77.33 1.37.53 1.84.68.77.25 1.48.21 2.03.13.62-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.3-.21-.62-.37-.33-.16-1.9-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.22.33-.84 1.05-1.03 1.27-.19.22-.38.25-.7.08-.33-.16-1.37-.5-2.6-1.61-.96-.86-1.61-1.92-1.8-2.24-.19-.33-.02-.5.14-.67.15-.15.33-.38.5-.58.16-.19.21-.33.32-.55.11-.22.05-.41-.03-.58-.08-.16-.72-1.76-1-2.4-.26-.63-.53-.54-.72-.55-.19-.01-.4-.01-.62-.01Z"/></svg>
       </a>
     </div>
 
