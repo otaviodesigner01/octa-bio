@@ -72,7 +72,8 @@
 
   /* ---------- ORGCHART: foto no centro + nós de serviços ---------- */
   .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-16px,-3vw,-4px);}
-  .radar{position:absolute;inset:0;pointer-events:none;}
+  .radar{position:absolute;inset:0;pointer-events:none;
+    -webkit-mask:linear-gradient(180deg,#000 0%,#000 30%,transparent 49%);mask:linear-gradient(180deg,#000 0%,#000 30%,transparent 49%);}
   .radar__rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .radar__rings path{fill:none;stroke:rgba(255,70,58,.16);stroke-width:.4;}
   .radar__rings line{stroke:rgba(255,70,58,.1);stroke-width:.4;}
@@ -83,7 +84,7 @@
     background:conic-gradient(from 0deg,transparent 0deg,transparent 358.6deg,rgba(255,180,150,.95) 360deg);}
 
   /* foto central — moldura HUD retangular */
-  .core{position:absolute;top:53%;left:50%;width:70%;aspect-ratio:1080/1350;transform:translate(-50%,-50%);}
+  .core{position:absolute;top:62%;left:50%;width:84%;aspect-ratio:1080/1350;transform:translate(-50%,-50%);}
   .core__frame{position:relative;width:100%;height:100%;}
   .core__frame img{width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));}
   .core__glow{position:absolute;inset:-14% -20%;z-index:-1;border-radius:50%;
