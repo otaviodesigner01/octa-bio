@@ -362,7 +362,7 @@
     for(var i=0;i<nodes.length;i++){
       if(adist(s,angs[i]) < 7) lit[i]=1; else lit[i]*=0.955;  // acende ao passar, some depois
       var op = lit[i];
-      nodes[i].style.opacity = (0.06 + 0.94*op).toFixed(3);
+      nodes[i].style.opacity = (0.55 + 0.45*op).toFixed(3);
       var chip = nodes[i].firstElementChild;
       if(chip) chip.style.setProperty('--ping', op.toFixed(3));
     }
