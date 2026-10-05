@@ -78,7 +78,7 @@
   @keyframes slowblink{0%,100%{opacity:1}50%{opacity:.35}}
 
   /* ---------- HERO CIRCULAR + HUD ao redor ---------- */
-  .org{position:relative;width:min(456px,97vw);aspect-ratio:1/1;margin:clamp(4px,1.6vw,10px) auto clamp(-4px,-1vw,0px);}
+  .org{position:relative;width:min(344px,80vw);aspect-ratio:1/1;margin:clamp(12px,3vw,22px) auto clamp(8px,2vw,14px);}
 
   /* decoração HUD */
   .hud{position:absolute;inset:0;pointer-events:none;}
@@ -114,7 +114,7 @@
   .hlabel.br{bottom:1.5%;right:6.5%;color:rgba(120,230,160,.72);}
 
   /* avatar circular */
-  .core{position:absolute;top:50%;left:50%;width:60%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;}
+  .core{position:absolute;top:50%;left:50%;width:88%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;}
   .core__frame{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;
     background:radial-gradient(closest-side,#1a0a0c,#0b0406);
     box-shadow:0 0 0 2px rgba(255,79,79,.92),0 0 22px 3px rgba(255,60,50,.5),0 0 64px 10px rgba(229,36,33,.26),inset 0 0 38px rgba(0,0,0,.62);}
@@ -230,35 +230,12 @@
       <span class="status"><span class="dot"></span>Disponível p/ projetos</span>
     </div>
 
-    <!-- HERO CIRCULAR + HUD -->
+    <!-- HERO: só o círculo -->
     <div class="org">
-      <div class="hud" aria-hidden="true">
-        <svg class="hud__svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <circle class="ring-a"  cx="50" cy="50" r="48"/>
-          <circle class="ring-b"  cx="50" cy="50" r="44"/>
-          <circle class="ring-c"  cx="50" cy="50" r="40"/>
-          <circle class="ring-in" cx="50" cy="50" r="31.5"/>
-        </svg>
-        <div class="tickring"></div>
-        <div class="sweep"></div>
-        <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
-        <span class="hlabel t">◈ OCTA · DESIGN UNIT</span>
-        <span class="hlabel bl">LAT 21.7°S · LON 45.9°W</span>
-        <span class="hlabel br">● SYS ONLINE</span>
-      </div>
-
-      <!-- avatar circular -->
       <div class="core">
         <span class="core__glow"></span>
         <div class="core__frame"><img src="assets/avatar.webp" alt="Otávio Designer" /></div>
       </div>
-
-      <!-- nós de serviço (meia-lua) -->
-      <div class="node n1"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 8h18"/><circle cx="6" cy="6" r=".6" fill="currentColor"/></svg></span><span class="node__lbl">Sites / LP</span></div>
-      <div class="node n2"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.2 5.6L20 9.8l-4 3.9 1 5.8-5-3-5 3 1-5.8-4-3.9 5.8-1.2z"/></svg></span><span class="node__lbl">Criativos</span></div>
-      <div class="node n3"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 8v8M20 8v8"/></svg></span><span class="node__lbl">Carrossel</span></div>
-      <div class="node n4"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 15c0-5 4-11 7-12 3 1 7 7 7 12a7 7 0 0 1-14 0Z"/><circle cx="12" cy="12" r="2.2"/></svg></span><span class="node__lbl">Lançamentos</span></div>
-      <div class="node n5"><span class="node__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v6c0 4.4-3 7-7 8-4-1-7-3.6-7-8V7z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></span><span class="node__lbl">ID Visual</span></div>
     </div>
 
     <!-- NOME + SERVIÇOS -->
