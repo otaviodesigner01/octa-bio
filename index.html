@@ -77,42 +77,62 @@
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,52,.5)}70%{box-shadow:0 0 0 6px rgba(255,59,52,0)}100%{box-shadow:0 0 0 0 rgba(255,59,52,0)}}
   @keyframes slowblink{0%,100%{opacity:1}50%{opacity:.35}}
 
-  /* ---------- ORGCHART: foto no centro + nós de serviços ---------- */
-  .org{position:relative;width:min(430px,94vw);aspect-ratio:1/1;margin-top:clamp(2px,1.5vw,8px);margin-bottom:clamp(-16px,-3vw,-4px);}
-  .radar{position:absolute;inset:0;pointer-events:none;
-    -webkit-mask:linear-gradient(180deg,#000 0%,#000 30%,transparent 49%);mask:linear-gradient(180deg,#000 0%,#000 30%,transparent 49%);}
-  .radar__rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
-  .radar__rings path{fill:none;stroke:rgba(255,70,58,.16);stroke-width:.4;}
-  .radar__rings line{stroke:rgba(255,70,58,.1);stroke-width:.4;}
-  .radar__half{position:absolute;left:0;top:0;width:100%;height:50%;overflow:hidden;}
-  .radar__sweep{position:absolute;left:0;top:0;width:100%;height:200%;border-radius:50%;transform-origin:center center;will-change:transform;
-    background:conic-gradient(from 0deg,transparent 0deg,transparent 300deg,rgba(255,70,58,.05) 326deg,rgba(255,70,58,.24) 356deg,rgba(255,150,120,.55) 360deg);}
-  .radar__sweep::after{content:"";position:absolute;inset:0;border-radius:50%;
-    background:conic-gradient(from 0deg,transparent 0deg,transparent 358.6deg,rgba(255,180,150,.95) 360deg);}
+  /* ---------- HERO CIRCULAR + HUD ao redor ---------- */
+  .org{position:relative;width:min(456px,97vw);aspect-ratio:1/1;margin:clamp(4px,1.6vw,10px) auto clamp(-4px,-1vw,0px);}
 
-  /* foto central — moldura HUD retangular */
-  .core{position:absolute;top:60%;left:50%;width:112%;aspect-ratio:928/906;transform:translate(-50%,-50%);}
-  .core__frame{position:relative;width:100%;height:100%;}
-  .core__frame img{width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));
-    -webkit-mask:linear-gradient(180deg,#000 0%,#000 60%,transparent 96%);mask:linear-gradient(180deg,#000 0%,#000 60%,transparent 96%);}
-  .core__glow{position:absolute;inset:-14% -20%;z-index:-1;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(229,36,33,.4),transparent 72%);filter:blur(10px);animation:breathe 5s var(--ease) infinite;}
-  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.06)}}
+  /* decoração HUD */
+  .hud{position:absolute;inset:0;pointer-events:none;}
+  .hud__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  .hud__svg circle{fill:none;}
+  .ring-a{stroke:rgba(255,70,58,.14);stroke-width:.35;}
+  .ring-in{stroke:rgba(255,80,66,.22);stroke-width:.4;}
+  .ring-b{stroke:rgba(255,90,74,.34);stroke-width:.5;stroke-dasharray:2.2 3.4;transform-origin:50% 50%;animation:spin 30s linear infinite;}
+  .ring-c{stroke:rgba(255,90,74,.18);stroke-width:.45;stroke-dasharray:.8 7;transform-origin:50% 50%;animation:spin 46s linear infinite reverse;}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* nós de serviço */
+  .tickring{position:absolute;inset:0;border-radius:50%;
+    background:repeating-conic-gradient(from 0deg,rgba(255,95,78,.42) 0 .5deg,transparent .5deg 7.5deg);
+    -webkit-mask:radial-gradient(circle closest-side,transparent 0 87%,#000 88% 95%,transparent 97%);
+            mask:radial-gradient(circle closest-side,transparent 0 87%,#000 88% 95%,transparent 97%);}
+
+  .sweep{position:absolute;inset:0;border-radius:50%;transform-origin:50% 50%;will-change:transform;
+    background:conic-gradient(from 0deg,transparent 0deg,transparent 300deg,rgba(255,70,58,.04) 322deg,rgba(255,110,88,.32) 352deg,rgba(255,190,160,.85) 360deg);
+    -webkit-mask:radial-gradient(circle closest-side,transparent 0 61%,#000 64% 90%,transparent 93%);
+            mask:radial-gradient(circle closest-side,transparent 0 61%,#000 64% 90%,transparent 93%);}
+
+  /* colchetes nos cantos */
+  .brk{position:absolute;width:22px;height:22px;border:2px solid rgba(255,90,74,.7);filter:drop-shadow(0 0 4px rgba(255,70,58,.4));}
+  .brk.tl{top:6.5%;left:6.5%;border-right:none;border-bottom:none;}
+  .brk.tr{top:6.5%;right:6.5%;border-left:none;border-bottom:none;}
+  .brk.bl{bottom:6.5%;left:6.5%;border-right:none;border-top:none;}
+  .brk.br{bottom:6.5%;right:6.5%;border-left:none;border-top:none;}
+
+  /* micro-labels */
+  .hlabel{position:absolute;font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 6px #000;color:rgba(255,120,104,.72);}
+  .hlabel.t{top:1.5%;left:50%;transform:translateX(-50%);}
+  .hlabel.bl{bottom:1.5%;left:6.5%;}
+  .hlabel.br{bottom:1.5%;right:6.5%;color:rgba(120,230,160,.72);}
+
+  /* avatar circular */
+  .core{position:absolute;top:50%;left:50%;width:60%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;}
+  .core__frame{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;
+    background:radial-gradient(closest-side,#1a0a0c,#0b0406);
+    box-shadow:0 0 0 2px rgba(255,79,79,.92),0 0 22px 3px rgba(255,60,50,.5),0 0 64px 10px rgba(229,36,33,.26),inset 0 0 38px rgba(0,0,0,.62);}
+  .core__frame img{width:100%;height:100%;object-fit:cover;object-position:50% 36%;}
+  .core__glow{position:absolute;inset:-20%;z-index:-1;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(229,36,33,.42),transparent 72%);filter:blur(12px);animation:breathe 5s var(--ease) infinite;}
+  @keyframes breathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.85;transform:scale(1.05)}}
+
+  /* nós de serviço (orbitando o círculo) */
   .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;
-    width:66px;opacity:0;will-change:opacity;}
-  .node__chip{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;color:#ffd9d1;
+    width:66px;opacity:0;will-change:opacity;z-index:3;}
+  .node__chip{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#ffd9d1;
     background:linear-gradient(140deg,rgba(255,255,255,.08),rgba(255,255,255,.015)),rgba(24,14,15,.72);
     border:1px solid rgba(255,90,74,calc(.32 + var(--ping,0)*.6));
     box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 22px rgba(0,0,0,.5),0 0 calc(10px + var(--ping,0)*26px) rgba(255,90,74,calc(.12 + var(--ping,0)*.7));
     transform:scale(calc(1 + var(--ping,0)*.14));transition:transform .18s var(--ease);}
-  .node__chip svg{width:22px;height:22px;}
+  .node__chip svg{width:21px;height:21px;}
   .node__lbl{font-family:var(--fm);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-shadow:0 1px 6px #000;}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  .n1{top:8%;left:50%}.n2{top:20%;left:80%}.n3{top:50%;left:92%}.n4{top:50%;left:8%}.n5{top:20%;left:20%}
-  .node:nth-child(2n) .node__chip{animation-duration:7.2s;animation-delay:-1.5s;}
-  .node:nth-child(3n) .node__chip{animation-duration:8s;animation-delay:-3s;}
 
   /* ---------- nome + serviços (mono) ---------- */
   .name{position:relative;z-index:5;margin-top:clamp(12px,2.6vw,20px);text-align:center;}
@@ -210,20 +230,27 @@
       <span class="status"><span class="dot"></span>Disponível p/ projetos</span>
     </div>
 
-    <!-- ORGCHART -->
+    <!-- HERO CIRCULAR + HUD -->
     <div class="org">
-      <div class="radar" aria-hidden="true">
-        <svg class="radar__rings" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M6 50 A44 44 0 0 1 94 50"/><path d="M20 50 A30 30 0 0 1 80 50"/><path d="M33 50 A17 17 0 0 1 67 50"/>
-          <line x1="6" y1="50" x2="94" y2="50"/><line x1="50" y1="6" x2="50" y2="50"/>
+      <div class="hud" aria-hidden="true">
+        <svg class="hud__svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <circle class="ring-a"  cx="50" cy="50" r="48"/>
+          <circle class="ring-b"  cx="50" cy="50" r="44"/>
+          <circle class="ring-c"  cx="50" cy="50" r="40"/>
+          <circle class="ring-in" cx="50" cy="50" r="31.5"/>
         </svg>
-        <div class="radar__half"><div class="radar__sweep"></div></div>
+        <div class="tickring"></div>
+        <div class="sweep"></div>
+        <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+        <span class="hlabel t">◈ OCTA · DESIGN UNIT</span>
+        <span class="hlabel bl">LAT 21.7°S · LON 45.9°W</span>
+        <span class="hlabel br">● SYS ONLINE</span>
       </div>
 
-      <!-- núcleo: foto (sem moldura, recorte que blenda) -->
+      <!-- avatar circular -->
       <div class="core">
         <span class="core__glow"></span>
-        <div class="core__frame"><img src="assets/otavio-hero.webp" alt="Otávio Designer" /></div>
+        <div class="core__frame"><img src="assets/avatar.webp" alt="Otávio Designer" /></div>
       </div>
 
       <!-- nós de serviço (meia-lua) -->
@@ -313,27 +340,29 @@
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var org = document.querySelector('.org');
-  var sweep = document.querySelector('.radar__sweep');
+  var sweep = document.querySelector('.sweep');
   var nodes = Array.prototype.slice.call(document.querySelectorAll('.node'));
-  if(!org || !sweep || !nodes.length) return;
-  var angs = [];
-  function measure(){
-    var r = org.getBoundingClientRect(), cx = r.left+r.width/2, cy = r.top+r.height/2;
-    angs = nodes.map(function(n){
-      var b = n.getBoundingClientRect(), dx = (b.left+b.width/2)-cx, dy = (b.top+b.height/2)-cy;
-      return Math.atan2(dx,-dy)*180/Math.PI; // -180..180, 0=topo, +direita, -esquerda
-    });
+  if(!org || !nodes.length) return;
+  // nós orbitando o círculo: topo, 2 à direita, 2 à esquerda
+  var angs = [0, 62, 118, 242, 298], R = 41;
+  function place(){
+    for(var i=0;i<nodes.length;i++){
+      var a = angs[i]*Math.PI/180;
+      nodes[i].style.left = (50 + R*Math.sin(a)).toFixed(2)+'%';
+      nodes[i].style.top  = (50 - R*Math.cos(a)).toFixed(2)+'%';
+    }
   }
-  measure(); window.addEventListener('resize', measure);
-  if(reduce){ nodes.forEach(function(n){n.style.opacity=1;}); sweep.style.display='none'; return; }
+  place(); window.addEventListener('resize', place);
+  function adist(a,b){ return Math.abs(((a-b+540)%360)-180); }
+  if(reduce){ nodes.forEach(function(n){n.style.opacity=1;}); if(sweep) sweep.style.display='none'; return; }
   var lit = nodes.map(function(){return 0;}), raf;
   function loop(now){
-    var s = -86 + ((now*0.024) % 172);         // meia-lua: varre -86 -> 86 e RECOMEÇA (mais lento, ~7s)
-    sweep.style.transform = 'rotate('+s+'deg)';
+    var s = (now*0.03) % 360;                    // varredura de círculo completo (~12s/volta)
+    if(sweep) sweep.style.transform = 'rotate('+s+'deg)';
     for(var i=0;i<nodes.length;i++){
-      if(Math.abs(s-angs[i]) < 7) lit[i]=1; else lit[i]*=0.955;  // acende ao passar, some depois
+      if(adist(s,angs[i]) < 7) lit[i]=1; else lit[i]*=0.955;  // acende ao passar, some depois
       var op = lit[i];
-      nodes[i].style.opacity = (0.03 + 0.97*op).toFixed(3);
+      nodes[i].style.opacity = (0.06 + 0.94*op).toFixed(3);
       var chip = nodes[i].firstElementChild;
       if(chip) chip.style.setProperty('--ping', op.toFixed(3));
     }
