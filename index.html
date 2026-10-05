@@ -42,16 +42,19 @@
   img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
 
+  /* ---------- fundo: Predictive Arc 4 (Originkit, WebGL) ---------- */
+  #arcbg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none;}
+
   /* ---------- fundo: grid HUD + canvas de partículas reativo ---------- */
-  .grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  .grid{position:fixed;inset:0;z-index:1;pointer-events:none;
     background-image:
       linear-gradient(rgba(255,70,58,.028) 1px,transparent 1px),
       linear-gradient(90deg,rgba(255,70,58,.028) 1px,transparent 1px);
     background-size:46px 46px;
     -webkit-mask:radial-gradient(120% 88% at 50% 36%,#000 52%,transparent 100%);
     mask:radial-gradient(120% 88% at 50% 36%,#000 52%,transparent 100%);}
-  .glow{position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(46% 34% at 50% 30%,rgba(229,36,33,.16),transparent 70%);
+  .glow{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(46% 34% at 50% 30%,rgba(229,36,33,.10),transparent 70%);
     animation:glowbreathe 7s ease-in-out infinite;}
   @keyframes glowbreathe{0%,100%{opacity:.7}50%{opacity:1}}
   #net{position:fixed;inset:0;z-index:1;display:block;}
@@ -189,6 +192,7 @@
 </head>
 <body>
 
+<canvas id="arcbg" aria-hidden="true"></canvas>
 <div class="grid" aria-hidden="true"></div>
 <div class="glow" aria-hidden="true"></div>
 <canvas id="net" aria-hidden="true"></canvas>
@@ -395,6 +399,226 @@
   }
   if(reduce){ frame(); } else { raf=requestAnimationFrame(frame); }
   document.addEventListener('visibilitychange',function(){ if(!document.hidden&&!reduce){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);} });
+})();
+</script>
+
+<!-- ===== Predictive Arc 4 — Originkit (código exato: shaders + lógica) ===== -->
+<script>
+(function(){
+  var MAX_DPR = 2;
+
+  var VERT_SRC = "\n"+
+"attribute vec2 a_pos;\n"+
+"void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }\n";
+
+  var FRAG_SRC = "\n"+
+"#ifdef GL_FRAGMENT_PRECISION_HIGH\n"+
+"precision highp float;\n"+
+"#else\n"+
+"precision mediump float;\n"+
+"#endif\n"+
+"\n"+
+"uniform vec2  uRes;\n"+
+"uniform float uTime, uDpr, uCell, uDot, uHover;\n"+
+"uniform vec2  uPtr;\n"+
+"uniform float uA, uB, uC, uD;\n"+
+"uniform vec3  uBg, uBase, uAccent, uHigh;\n"+
+"\n"+
+"void main(){\n"+
+"  float cs = max(uCell, 2.0);\n"+
+"  vec2 ci = floor(gl_FragCoord.xy / cs);\n"+
+"  vec2 cc = (ci + 0.5) * cs;\n"+
+"\n"+
+"  float x = cc.x / uDpr;\n"+
+"  float y = (uRes.y - cc.y) / uDpr;\n"+
+"  float w = uRes.x / uDpr;\n"+
+"  float h = uRes.y / uDpr;\n"+
+"  float t = uTime;\n"+
+"\n"+
+"  float i = 0.0;\n"+
+"  float leanX = (uPtr.x - w * 0.5) * 0.5 * uHover;\n"+
+"  float leanY = (uPtr.y - h * 0.5) * 0.25 * uHover;\n"+
+"  float n1 = max(uA, 1.0);\n"+
+"  for (int n = 0; n < 8; n++) {\n"+
+"    float fn = float(n);\n"+
+"    if (fn >= n1) break;\n"+
+"    float par = 1.0 - 0.6 * fn / n1;\n"+
+"    float cx = w * 0.5 + leanX * par;\n"+
+"    float normX = (x - cx) / (w * 0.75);\n"+
+"    float curveY = h * 0.3 + fn * h * uB + leanY * par\n"+
+"                 + normX * normX * h * uC * (1.0 + 0.08 * fn);\n"+
+"    float th = (40.0 + (1.0 - min(abs(normX), 1.0)) * 25.0) * uD;\n"+
+"    float dist = abs(y - curveY);\n"+
+"    if (dist < th) {\n"+
+"      float b = 1.0 - dist / th;\n"+
+"      float waveX = sin(x * 0.015 + t);\n"+
+"      float waveY = cos(y * 0.02 + t);\n"+
+"      b = b * 0.7 + waveX * waveY * 0.3 * b;\n"+
+"      b *= max(0.0, 1.0 - pow(abs(normX), 2.5));\n"+
+"      b *= 0.45 + 0.55 * (0.5 + 0.5 * sin(t * 1.5 - fn * 0.9));\n"+
+"      i = max(i, b);\n"+
+"    }\n"+
+"  }\n"+
+"\n"+
+"  vec3 col = uBg;\n"+
+"  if (i > 0.02) {\n"+
+"    float side = uDot * i * uDpr;\n"+
+"    vec2 d = abs(gl_FragCoord.xy - cc);\n"+
+"    float cov = 1.0 - smoothstep(side * 0.5 - 1.0, side * 0.5 + 1.0, max(d.x, d.y));\n"+
+"\n"+
+"    vec3 ink = mix(uBase, uAccent, clamp(pow(i, 1.1), 0.0, 1.0));\n"+
+"    ink = mix(ink, uHigh, smoothstep(0.72, 1.0, i));\n"+
+"    col = mix(uBg, ink, cov * clamp(i * 1.6, 0.0, 1.0));\n"+
+"  }\n"+
+"  gl_FragColor = vec4(col, 1.0);\n"+
+"}\n";
+
+  function compile(gl, type, src){
+    var sh = gl.createShader(type);
+    if (!sh) return null;
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      console.error("PredictiveArcEcho shader:", gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+
+  function parseColor(input, fb){
+    if (!input) return fb;
+    var str = String(input).trim();
+    if (str.charAt(0) === "#") {
+      var hex = str.slice(1);
+      if (hex.length === 3 || hex.length === 4) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      }
+      if (hex.length >= 6) {
+        var r = parseInt(hex.slice(0,2),16);
+        var g = parseInt(hex.slice(2,4),16);
+        var b = parseInt(hex.slice(4,6),16);
+        if (!isNaN(r) && !isNaN(g) && !isNaN(b)) return [r/255,g/255,b/255];
+      }
+      return fb;
+    }
+    var m = str.match(/[\d.]+/g);
+    if (m && m.length >= 3) {
+      return [Math.min(255,parseFloat(m[0]))/255, Math.min(255,parseFloat(m[1]))/255, Math.min(255,parseFloat(m[2]))/255];
+    }
+    return fb;
+  }
+  function num(v, fb){ return typeof v === "number" && isFinite(v) ? v : fb; }
+  function clampN(v, lo, hi){ return v < lo ? lo : v > hi ? hi : v; }
+
+  // ----- preset props (Originkit __originkitPresetProps + defaults) -----
+  var props = {
+    background: "#07030A",
+    baseColor: "#3F0B1D",
+    accentColor: "#FF4F4F",
+    highlight: "#FFFFFF",
+    density: 160,
+    dotSize: 100,
+    speed: 50,
+    hover: 31,
+    echo: { gap: 9, count: 5, thickness: 100, archHeight: 70 }
+  };
+  var grp = props.echo;
+  var V = {
+    bg: props.background, base: props.baseColor, accent: props.accentColor, high: props.highlight,
+    density: Math.round(clampN(num(props.density,160),40,320)),
+    dotSize: clampN(num(props.dotSize,100),20,400)/100,
+    speed: clampN(num(props.speed,50),0,100)/50,
+    hover: clampN(num(props.hover,100),0,200)/100,
+    count: clampN(num(grp.count,5),1,8),
+    gap: clampN(num(grp.gap,9),2,30)/100,
+    archHeight: clampN(num(grp.archHeight,70),0,300)/100,
+    thickness: clampN(num(grp.thickness,100),20,400)/100
+  };
+
+  var canvas = document.getElementById("arcbg");
+  if (!canvas) return;
+  var gl = canvas.getContext("webgl", { alpha:false, antialias:false, depth:false });
+  if (!gl) { console.error("PredictiveArcEcho: WebGL unavailable"); return; }
+
+  var vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
+  var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
+  if (!vs || !fs) return;
+  var prog = gl.createProgram();
+  if (!prog) return;
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error("PredictiveArcEcho link:", gl.getProgramInfoLog(prog)); return; }
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  var locs = {};
+  function u(name){ if(!(name in locs)) locs[name] = gl.getUniformLocation(prog, name); return locs[name]; }
+
+  var ptr = { tx:0.5, ty:0.5, x:0.5, y:0.5 };
+  var raf = 0, last = performance.now(), clock = 0, PTR_RATE = 6.0;
+
+  function render(now){
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    clock = (clock + dt * 0.9 * V.speed) % 6283;
+
+    var k = 1 - Math.exp(-dt * PTR_RATE);
+    ptr.x += (ptr.tx - ptr.x) * k;
+    ptr.y += (ptr.ty - ptr.y) * k;
+
+    var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+    var cw = canvas.clientWidth || window.innerWidth || 1200;
+    var ch = canvas.clientHeight || window.innerHeight || 800;
+    var bw = Math.max(1, Math.round(cw * dpr));
+    var bh = Math.max(1, Math.round(ch * dpr));
+    if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
+    gl.viewport(0, 0, bw, bh);
+
+    var pitchCss = Math.min(bw, bh) / dpr / V.density;
+
+    gl.uniform2f(u("uRes"), bw, bh);
+    gl.uniform1f(u("uTime"), clock);
+    gl.uniform1f(u("uDpr"), dpr);
+    gl.uniform1f(u("uCell"), Math.max(2, pitchCss * dpr));
+    gl.uniform1f(u("uDot"), pitchCss * 1.2 * V.dotSize);
+    gl.uniform1f(u("uA"), V.count);
+    gl.uniform1f(u("uB"), V.gap);
+    gl.uniform1f(u("uC"), V.archHeight);
+    gl.uniform1f(u("uD"), V.thickness);
+    gl.uniform1f(u("uHover"), V.hover);
+    gl.uniform2f(u("uPtr"), ptr.x * (bw / dpr), ptr.y * (bh / dpr));
+    var cg = parseColor(V.bg, [0.012,0.012,0.012]);
+    var cb = parseColor(V.base, [0.169,0.055,0.369]);
+    var ca = parseColor(V.accent, [0.627,0.314,1.0]);
+    var chh = parseColor(V.high, [1,1,1]);
+    gl.uniform3f(u("uBg"), cg[0],cg[1],cg[2]);
+    gl.uniform3f(u("uBase"), cb[0],cb[1],cb[2]);
+    gl.uniform3f(u("uAccent"), ca[0],ca[1],ca[2]);
+    gl.uniform3f(u("uHigh"), chh[0],chh[1],chh[2]);
+
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    raf = requestAnimationFrame(render);
+  }
+
+  function track(e){
+    var r = canvas.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return;
+    ptr.tx = clampN((e.clientX - r.left) / r.width, 0, 1);
+    ptr.ty = clampN((e.clientY - r.top) / r.height, 0, 1);
+  }
+  function onLeave(){ ptr.tx = 0.5; ptr.ty = 0.5; }
+  window.addEventListener("pointermove", track, { passive:true });
+  window.addEventListener("pointerleave", onLeave);
+
+  raf = requestAnimationFrame(render);
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden) { last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(render); }
+  });
 })();
 </script>
 </body>
