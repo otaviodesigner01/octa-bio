@@ -13,7 +13,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Kapakana&display=swap" rel="stylesheet" />
 
 <style>
   :root{
@@ -111,9 +111,13 @@
   .node:nth-child(3n) .node__chip{animation-duration:8s;animation-delay:-3s;}
 
   /* ---------- nome + serviços (mono) ---------- */
-  .name{position:relative;z-index:5;margin-top:clamp(14px,3vw,22px);font-family:"Orbitron",var(--fd);font-weight:800;font-size:clamp(30px,8.4vw,42px);letter-spacing:.01em;line-height:.98;text-align:center;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.6);}
-  .name span{display:block;}
-  .name__r{background:linear-gradient(90deg,#cb0000,#ff5a46 30%,#ffffff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .name{position:relative;z-index:5;margin-top:clamp(12px,2.6vw,20px);text-align:center;}
+  .name .ov{display:block;font-family:"Orbitron",var(--fd);font-weight:800;font-size:clamp(23px,6vw,36px);letter-spacing:.03em;line-height:1;text-transform:uppercase;color:#f3f4f7;text-shadow:0 2px 20px rgba(0,0,0,.6);}
+  .name .dz{display:block;font-family:"Kapakana","Orbitron",cursive;font-weight:400;font-size:clamp(62px,18vw,110px);line-height:.72;margin-top:-.26em;
+    background:linear-gradient(100deg,#5a0202 0%,#c70003 24%,#ff7a68 42%,#ffffff 50%,#ff7a68 58%,#c70003 76%,#5a0202 100%);
+    background-size:230% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 3px 7px rgba(0,0,0,.55));animation:metal 4.6s linear infinite;}
+  @keyframes metal{to{background-position:-230% 0}}
   .svc{margin-top:10px;width:100%;font-family:var(--fm);font-size:clamp(11px,3.1vw,13px);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:center;align-items:baseline;gap:8px;flex-wrap:wrap;}
   .svc .tag{color:var(--red-2);white-space:nowrap;}
   .svc .w{color:var(--white);white-space:nowrap;transition:opacity .3s;}
@@ -178,7 +182,7 @@
     .lk__t{font-size:15.5px;}
   }
   @media (prefers-reduced-motion:reduce){
-    .core__glow,.glow,.topbar .status,.topbar .status .dot,.lk__holo,.svc .cur{animation:none;}
+    .core__glow,.glow,.topbar .status,.topbar .status .dot,.lk__holo,.svc .cur,.name .dz{animation:none;}
   }
 </style>
 </head>
@@ -226,7 +230,7 @@
     </div>
 
     <!-- NOME + SERVIÇOS -->
-    <h1 class="name"><span>Otávio</span><span class="name__r">Designer</span></h1>
+    <h1 class="name"><span class="ov">Otávio</span><span class="dz">Designer</span></h1>
     <div class="svc"><span class="tag">SERVIÇOS //</span><span class="w" id="svcWord">Sites</span><span class="cur">▍</span></div>
 
     <!-- SOCIAIS -->
@@ -242,12 +246,12 @@
     <!-- BOTÕES -->
     <nav class="links" aria-label="Links">
 
-      <a class="lk" href="https://astrus-acessoria.vercel.app/" target="_blank" rel="noopener">
+      <a class="lk" href="https://wa.me/5535991409445" target="_blank" rel="noopener">
         <div class="lk__art"><img src="assets/art-orcamento.jpg" alt="" loading="lazy" /></div>
         <span class="lk__holo" aria-hidden="true"></span>
         <div class="lk__row">
-          <span class="lk__ic" aria-hidden="true"><img src="assets/ic-octa.svg" alt="" /></span>
-          <span class="lk__tx"><span class="lk__t">Orçamento &amp; Portfólio</span><span class="lk__s">Conheça meus projetos ou solicite um orçamento diretamente do site.</span></span>
+          <span class="lk__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24Zm-4.6 4.42c-.22 0-.57.08-.87.4-.3.33-1.14 1.12-1.14 2.72s1.17 3.16 1.33 3.38c.16.22 2.28 3.48 5.53 4.88.77.33 1.37.53 1.84.68.77.25 1.48.21 2.03.13.62-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.3-.21-.62-.37-.33-.16-1.9-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.22.33-.84 1.05-1.03 1.27-.19.22-.38.25-.7.08-.33-.16-1.37-.5-2.6-1.61-.96-.86-1.61-1.92-1.8-2.24-.19-.33-.02-.5.14-.67.15-.15.33-.38.5-.58.16-.19.21-.33.32-.55.11-.22.05-.41-.03-.58-.08-.16-.72-1.76-1-2.4-.26-.63-.53-.54-.72-.55-.19-.01-.4-.01-.62-.01Z"/></svg></span>
+          <span class="lk__tx"><span class="lk__t">Entre em contato</span><span class="lk__s">Conheça meus projetos ou solicite um orçamento diretamente do site.</span></span>
           <span class="lk__go" aria-hidden="true">→</span>
         </div>
       </a>
